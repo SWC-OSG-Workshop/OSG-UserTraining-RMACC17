@@ -1,0 +1,159 @@
+---
+layout: workshop
+root: .
+venue: San Diego Supercomputer Center at UCSD, Synthesis Center Room
+address: 10100 Hopkins Drive, La Jolla, CA 92093-0505
+country: United States
+humandate: March 9, 2017
+humantime: 9:00 am - 12:30 pm
+startdate: MAR-09-2017
+enddate: MAR-09-2017
+latlng: 32.884308, -117.239978
+registration: https://www.eventbrite.com/e/osg-user-training-tickets-31888933659
+instructor: ["Mats Rynge, Bala Desinghu, Benedikt Riedel"]
+helper: ["Christina Koch"]
+contact: user-support@opensciencegrid.org
+---
+    
+
+
+<!--
+    Edit the values in the parameter block above to be appropriate for your bootcamp.
+-->
+
+<!--
+    This block includes the Eventbrite registration widget if 'eventbrite' has been set in the header.
+-->
+{% if page.eventbrite %}
+<iframe src="//www.eventbrite.com/tickets-external?eid={{page.eventbrite}}&ref=etckt" frameborder="0" width="100%" scrolling="auto"></iframe>
+{% endif %}
+
+<h2>General Information</h2>
+
+<p>
+The <a href="http://www.opensciencegrid.org">Open Science Grid</a> (OSG) is a national scale distributed
+  infrastructure for scientific computing.  Users can use <a href="http://osgconnect.net">OSG Connect</a>
+  to easily gain access to the resources that OSG provides. The OSG also offers training and tutorials for the
+  scientists and researchers across USA. As part of our training service we are offering special training session at the 2017 OSG All Hands Meeting.
+</p>
+  
+<!-- This block displays the instructors' names if they are available. -->
+{% if page.instructor %}
+<p>
+  <strong>Instructors:</strong>
+  {{page.instructor | join: ', ' %}}
+</p>
+{% endif %}
+
+<!-- This block displays the helpers' names if they are available. -->
+{% if page.helper %}
+<p>
+  <strong>Helpers:</strong>
+  {{page.helper | join: ', ' %}}
+</p>
+{% endif %}
+
+<!--
+    Modify this block to reflect the target audience for your bootcamp.
+    In particular, if it is only open to people from a particular institution,
+    or if specialized prerequisite knowledge is required, please mention that.
+-->
+<!--
+<p>
+  <strong>Who:</strong>
+  The course is aimed at graduate students, post-doctoral researchers and other researchers.
+</p>
+-->
+<!--
+    This block displays the address and links to a map showing directions.
+-->
+{% if page.latlng %}
+<p>
+  <strong>Where:</strong>
+  {{ page.address }}.
+  Get directions with
+  <a href="//www.openstreetmap.org/?mlat={{ page.latlng | replace:',','&mlon=' }}&zoom=16">OpenStreetMap</a>
+  or
+  <a href="//maps.google.com/maps?q={{ page.latlng }}">Google Maps</a>.
+</p>
+{% endif %}
+
+<!--
+    Modify the block below if there are any special requirements.
+-->
+<p>
+  <strong>Requirements:</strong>
+  Participants must bring a laptop with a few specific software packages installed
+  (listed below).
+</p>
+
+<!--
+    This block automatically inserts a contact email address if one has been specified for the page.
+    If one hasn't, this block inserts the generic contact address for Software Carpentry.
+-->
+<p>
+  <strong>Contact</strong>:
+  Please mail
+  {% if page.contact %}
+    <a href='mailto:{{page.contact}}'>{{page.contact}}</a>
+  {% else %}
+    <a href='mailto:{{site.contact}}'>{{site.contact}}</a>
+  {% endif %}
+  for more information.
+</p>
+
+<hr/>
+
+{% if page.registration %}
+<h2>Registration</h2>
+<p>
+Space is limited for the event. To register,  please <a href="{{page.registration}}"> visit here </a>.
+</p>
+{% endif %}
+<hr/>
+
+<h2>Schedule</h2>
+<h2> </h2>
+<div class="row-fluid">
+    <h4> Basics of High Throughput Computing and OSG Connect </h4>
+    <h4> March 9th, 9:00 AM - 12:30 PM </h4>
+    <h5>Location: TBD </h5>
+    <h5>Instructors: TBD</h5>
+     <h3> </h3>
+    <table class="table table-striped">
+      <tr> <td>08:30 - 09:00</td> <td> Set-up </td> </tr>
+      <tr> <td>09:00 - 09:15 </td> <td> <a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/01-IntroGrid.html">Introduction to OSG </a> </td> </tr>
+      <tr> <td>09:15 - 10:00 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/04-HTCondor-Submitting.html">Job Scheduling with HTCondor</a></td> </tr>
+      <tr> <td>10:00 - 10:30 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/04a-ScalingUp.html">Large scale Computation with HTCondor</a> </td> </tr>
+      <tr> <td>10:30 - 11:00</td> <td><em>Coffee break</em></td> </tr>
+      <tr> <td>11:00 - 11:25 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/04-dagman.html"> Workflow management with DAGMan </a> </td> </tr>
+      <tr> <td>11:25 - 11:50 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/05-Stash.html">Data Management</a> </td></td></td></tr>
+      <tr> <td>11:50 - 12:20 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/08-condor_annex.html">Adding Resources from Amazon AWS</a> </td></td></td></tr>
+      <tr> <td>11:20 - 12:30 </td> <td>What's next? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyQeOsNd9tMmu6RiNPPLSuCjfGWgbO9_p33lyMeeAj0EZoVg/viewform">Feedback for the workshop</a> </td></td></td></tr>
+    </table>
+  </div>
+<hr/>
+
+
+
+<!--
+    Edit this block to show what topics will be covered.
+-->
+
+<h2>Setup Instructions </h2>
+<p>
+  <a href="setup.html">Instructions to set up the required software on Linux, Windows and Mac laptops and OSG sign up information. </a>
+</p>
+<hr/> 
+
+<h2>Feedback</h2>
+<p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyQeOsNd9tMmu6RiNPPLSuCjfGWgbO9_p33lyMeeAj0EZoVg/viewform">Feedback for the workshop</a>. 
+</p>
+<hr/> 
+
+
+<!--
+    Edit the setup instructions in _includes/setup.html to reflect your bootcamp.
+    (In particular, most bootcamps teach either Python or R, not both.)
+-->
