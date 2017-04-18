@@ -1,4 +1,4 @@
-The webpage is located at https://osgconnect.github.io/osg-ahm-17/index.html
+The webpage is located at https://swc-osg-workshop.github.io/2017-03-09-UCSD-AHM/
 
 ============================
 #Software Carpentry - Open Science Grid (SWC-OSG) Workshop#
@@ -12,11 +12,9 @@ CurrentWebPage(http://swc-osg-workshop.github.io/general/). Since we want all th
 displayed on the webpage and available to the participants, we want to directly work 
 on `gh-pages`. This is the standard practice recomended by the software carpentry. 
 
-
 The `general/gh-pages` repo contains the basic learning modules and necessary 
 tools to set up new websites for the up-comping worshops. In this repo, we will 
 update all the new materials and make generic changes to the woskshop front page. 
-
 
 The sections below explain:
 
