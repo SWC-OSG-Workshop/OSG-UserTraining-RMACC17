@@ -1,4 +1,4 @@
-The webpage is located at https://swc-osg-workshop.github.io/2017-03-09-UCSD-AHM/
+The webpage is located at https://swc-osg-workshop.github.io/OSG-UserTraining-PEARC17
 
 ============================
 #Software Carpentry - Open Science Grid (SWC-OSG) Workshop#
