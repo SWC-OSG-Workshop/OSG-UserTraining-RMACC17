@@ -33,13 +33,19 @@ Practice and Experience in Advanced Research Computing 2017 (PEARC17) July 9-13,
 
 <h2>General Information</h2>
 
-<p>
-The <a href="http://www.opensciencegrid.org">Open Science Grid</a> (OSG) is a national scale distributed
-  infrastructure for scientific computing.  Users can use <a href="http://osgconnect.net">OSG Connect</a>
-  to easily gain access to the resources that OSG provides. The OSG also offers training and tutorials for the
-  scientists and researchers across USA. As part of our training service we are offering special training session at the
-   Practice and Experience in Advanced Research Computing 2017 (PEARC17), New Orleans, LA.
-    
+Would you like to use distributed resources of the
+<a href="http://www.opensciencegrid.org">Open Science Grid</a>, or
+just want to learn how to do large-scale high throughput computing? The
+format of this tutorial is a mix of lecture and hands-on exercises, so
+please bring your laptop and make sure you have an SSH client installed.
+You will be provided with a training account on OSG Connect which,
+during the tutorial, will be upgraded to a full user account. After
+the session, you will have full access to the OSG, know how to run and
+scale up workloads, manage your data and also submit to Amazon cloud
+resources. If time permits, the OSG User Support team will also help
+get your own workload set up for execution on OSG. Topics to include:
+Introduction to OSG Connect; Job Scheduling with HTCondor; Scaling Up
+Workloads; Managing data; High throughput submission to Amazon cloud
 </p>
   
 <!-- This block displays the instructors' names if they are available. -->
@@ -51,12 +57,14 @@ The <a href="http://www.opensciencegrid.org">Open Science Grid</a> (OSG) is a na
 {% endif %}
 
 <!-- This block displays the helpers' names if they are available. -->
+<!--
 {% if page.helper %}
 <p>
   <strong>Helpers:</strong>
   {{page.helper | join: ', ' %}}
 </p>
 {% endif %}
+-->
 
 <!--
     Modify this block to reflect the target audience for your bootcamp.
@@ -72,6 +80,7 @@ The <a href="http://www.opensciencegrid.org">Open Science Grid</a> (OSG) is a na
 <!--
     This block displays the address and links to a map showing directions.
 -->
+<!--
 {% if page.latlng %}
 <p>
   <strong>Where:</strong>
@@ -82,6 +91,7 @@ The <a href="http://www.opensciencegrid.org">Open Science Grid</a> (OSG) is a na
   <a href="//maps.google.com/maps?q={{ page.latlng }}">Google Maps</a>.
 </p>
 {% endif %}
+-->
 
 <!--
     Modify the block below if there are any special requirements.
@@ -89,7 +99,7 @@ The <a href="http://www.opensciencegrid.org">Open Science Grid</a> (OSG) is a na
 <p>
   <strong>Requirements:</strong>
   Participants must bring a laptop with a few specific software packages installed
-  (listed below).
+  (see <a href="setup.html">Setup</a>).
 </p>
 
 <!--
@@ -126,15 +136,11 @@ Space is limited for the event. To register,  please <a href="{{page.registratio
     <h5>Instructors: TBD</h5>
      <h3> </h3>
     <table class="table table-striped">
-      <tr> <td>08:30 - 09:00</td> <td> Set-up </td> </tr>
-      <tr> <td>09:00 - 09:15 </td> <td> <a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/01-IntroGrid.html">Introduction to OSG </a> </td> </tr>
-      <tr> <td>09:15 - 10:00 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/04-HTCondor-Submitting.html">Job Scheduling with HTCondor</a></td> </tr>
-      <tr> <td>10:00 - 10:30 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/04a-ScalingUp.html">Large scale Computation with HTCondor</a> </td> </tr>
+      <tr> <td>09:00 - 09:15 </td> <td> <a href="novice/DHTC/01-IntroGrid.html">Introduction to OSG </a> </td> </tr>
+      <tr> <td>09:15 - 10:00 </td> <td><a href="novice/DHTC/04-HTCondor-Submitting.html">Job Scheduling with HTCondor</a></td> </tr>
+      <tr> <td>10:00 - 10:30 </td> <td><a href="novice/DHTC/04a-ScalingUp.html">Large scale Computation with HTCondor</a> </td> </tr>
       <tr> <td>10:30 - 11:00</td> <td><em>Coffee break</em></td> </tr>
-      <tr> <td>11:00 - 11:25 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/04-dagman.html"> Workflow management with DAGMan </a> </td> </tr>
-      <tr> <td>11:25 - 11:50 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/05-Stash.html">Data Management</a> </td></td></td></tr>
-      <tr> <td>11:50 - 12:20 </td> <td><a href="http://osgconnect.github.io/osg-ahm-17/novice/DHTC/08-condor_annex.html">Adding Resources from Amazon AWS</a> </td></td></td></tr>
-      <tr> <td>11:20 - 12:30 </td> <td>What's next? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyQeOsNd9tMmu6RiNPPLSuCjfGWgbO9_p33lyMeeAj0EZoVg/viewform">Feedback for the workshop</a> </td></td></td></tr>
+      <tr> <td>11:00 - 12:30 </td> <td><a href="novice/DHTC/08-condor_annex.html">Adding Resources from Amazon AWS</a> </td></td></td></tr>
     </table>
   </div>
 <hr/>
@@ -151,11 +157,13 @@ Space is limited for the event. To register,  please <a href="{{page.registratio
 </p>
 <hr/> 
 
+<!--
 <h2>Feedback</h2>
 <p>
   <a href="https://docs.google.com/forms/d/1kJJ0QGsY_Aqpn1rdN5Ng8KuBoL5lpmjFXQcFS3SMKwo/edit">Feedback for the workshop</a>. 
 </p>
-<hr/> 
+<hr/>
+-->
 
 
 <!--
