@@ -6,16 +6,15 @@ title: Adding Resources from Amazon AWS
 <div class="objectives" markdown="1">
 
 #### Objectives
-*   Discover how to use condor_annex to add dedicated resources from Amazon AWS
+*   Discover how to use `condor_annex` to add dedicated resources from Amazon AWS
+*   Submit workloads to AWS, and to OSG and AWS simultaneously
+*   Please note that his is a technical preview. We expect features and interface to change rapidly.
 </div>
 
-Please note that his is a technical preview. We expect features and interface
-to change rapidly, and if you have feedback, please sent it to
-user-support@opensciencegrid.org
 
-<h2>condor_annex</h2>
+<h2>condor_annex (and connect_annex)</h2>
 
-* The condor_annex tool is available in the HTCondor 8.7.2 development release
+* The `condor_annex` tool is available in the HTCondor 8.7.2 development release
 * Labeled as “experimental” because the interface(s) might change
 * The current version has limited functionality and hence limited applicability
 
@@ -25,9 +24,9 @@ Use cases
 * Capability - large memory, GPU, long run times, fast local storage, job policies
 * Capacity
 
-<h2>connect_annex</h2>
+`connect_annex` is a wrapper around `condor_annex` which provides some OSG Connect
+integration. Please use `connect_annex` in this tutorial.
 
-Simple wrapper around condor_annex. 
 
 <h2>Setting up AWS access</h2>
 
@@ -38,28 +37,29 @@ Simple wrapper around condor_annex.
 
 The last command ensures that only you can read or write to those files.
 
-To donwload a new pair of security tokens for condor_annex to use, go
-to the IAM console; log in if you need to. The following instructions
+To donwload a new pair of security tokens for `condor_annex` to use, go
+to the [IAM console](https://console.aws.amazon.com/iam/home?region=us-east-1#/home)
+; log in if you need to. The following instructions
 assume you are logged in as a user with the privilege to create new
 users. (The 'root' user for any account has this privilege; other
 accounts may as well.)
 
- 1. Click the "Add User" button.
- 2. Enter name in the User name box; "annex-user" is a fine choice.
- 3. Click the check box labelled "Programmatic access".
- 4. Click the button labelled "Next: Permissions".
- 5. Select "Attach existing policies directly".
- 6. Type "AdministratorAccess" in the box labelled "Filter".
- 7. Click the check box on the single line that will appear below (labelled "AdministratorAccess").
- 8. Click the "Next: review" button (you may need to scroll down).
- 9. Click the "Create user" button.
- 10. From the line labelled "annex-user", copy the value in the column labelled "Access key ID" to accessKeyFile.
- 11. On the line labelled "annex-user", click the "Show" link in the column labelled "Secret access key"; copy the revealed value to secretKeyFile.
- 12. Hit the "Close" button.
+ 1. Click the __Add User__ button.
+ 2. Enter name in the User name box; __annex-user__ is a fine choice.
+ 3. Click the check box labelled __Programmatic access__.
+ 4. Click the button labelled __Next: Permissions__.
+ 5. Select __Attach existing policies directly__.
+ 6. Type __AdministratorAccess__ in the box labelled "Filter".
+ 7. Click the check box on the single line that will appear below (labelled __AdministratorAccess__).
+ 8. Click the __Next: review__ button (you may need to scroll down).
+ 9. Click the __Create user__ button.
+ 10. From the line labelled annex-user, copy the value in the column labelled __Access key ID__ to `accessKeyFile`.
+ 11. On the line labelled annex-user", click the __Show__ link in the column labelled __Secret access key__; copy the revealed value to `secretKeyFile`.
+ 12. Hit the __Close__ button.
 
 The 'annex-user' now has full privileges to your account. We're working
 on creating a CloudFormation template that will create a user with only
-the privileges condor_annex actually needs.
+the privileges `condor_annex` actually needs.
 
 <h2>Running the Setup Command</h2>
 
