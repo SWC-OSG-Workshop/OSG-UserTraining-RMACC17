@@ -32,7 +32,7 @@ ssh username@training.osgconnect.net   # username is your username
 password:                              # enter your password
 ~~~
 
-We will get our example files for all today's lessons using `tutorial`.
+We will get our example files using `tutorial`.
 
 Let's get started with the *quickstart* tutorial:
 
@@ -41,7 +41,7 @@ $ tutorial quickstart       # creates a directory "tutorial-quickstart"
 $ cd tutorial-quickstart    # script and input files are inside this directory
 ~~~
 
-We will look at two files in detail: "short.sh" and "tutorial01.submit"
+We will look at two files in detail: `short.sh` and `tutorial01.submit`
 
 ## Job execution script ##
 
@@ -78,7 +78,7 @@ $ chmod +x short.sh
 
 Since we used the tutorial command, all files are already in your
 workspace. Run the job locally when setting up a new job type -- it is
-important to test your job outside of HTCondor before submitting into
+good to test your job outside of HTCondor before submitting into
 the Open Science Grid.
 
 ~~~
@@ -297,7 +297,7 @@ example:
 Requirements = OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64" && HAS_MODULES == True
 ~~~
 
-Let's examine a what a machine classad looks like. This is a two step
+Let's examine what a machine classad looks like. This is a two step
 process, first we get a name for one of the machines, and then we ask
 condor_status to give us the details for that machine (-long).
 

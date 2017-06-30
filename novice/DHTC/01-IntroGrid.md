@@ -16,13 +16,12 @@ title: Introduction to Open Science Grid
 ## Introduction to Open Science Grid (OSG)  
 
 The Open Science Grid (OSG) is a consortium of research communities which facilitates distributed [high throughput computing](http://en.wikipedia.org/wiki/High-throughput_computing) for scientific research. The Open Science Grid (OSG)
-<ul> 
-<li> Enables distributed computing on more than 120 institutions, </li>
-<li> Supports efficient data processing and  </li>
-<li> Provides large scale scientific computing of 2 million core CPU hours per day.   </li>
-</ul> 
 
-The Open Science Grid consists of computing and storage elements at over 100 individual sites spanning the United States. These sites are primarily at universities and national labs. They range in size from a few hundred to tens of thousands of CPU cores. The unused compute resources at the various OSG contributors are aggregated in a shared pool and made available to the users opportunistically. This means that resource availability may vary greatly with time. 
+* Enables distributed computing on more than 120 institutions,
+* Supports efficient data processing and 
+* Provides large scale scientific computing of 2 million core CPU hours per day.
+
+The Open Science Grid consists of computing and storage elements at over 100 individual sites spanning the United States (for additional detail and geographic distribution of sites, check the [introduction to OSG slides](https://docs.google.com/presentation/d/1QGNxBXFcFJ4SkP3nhywtpYRx8kC0C6j5NTP_ZuVx4Qw/edit?usp=sharing)). These sites are primarily at universities and national labs. They range in size from a few hundred to tens of thousands of CPU cores. The unused compute resources at the various OSG contributors are aggregated in a shared pool and made available to the users opportunistically. This means that resource availability may vary greatly with time. 
 
 
 ## Computation that is a good match for OSG 
@@ -44,7 +43,7 @@ Please consider the following guidelines:
 <li>   Software should preferably be single threaded, using less than 2 GB memory and 
     each invocation should run for 1-12 hours (optimally under 3 hours). There is 
     some support for jobs with longer run time, more memory or multi-threaded codes. 
-    Please contact the support listed below for more information about these 
+    Please contact the user support listed below for more information about these 
     capabilities.</li>
 <li>   Only core utilities can be expected on the remote end. There are no standard 
     versions of software such as 'gcc', 'python', 'BLAS' or others on the grid. 
@@ -122,18 +121,18 @@ $ module avail
  Where:
    (D):  Default Module
  
-Use "module spider" to find all possible modules.
-Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+Use `module spider` to find all possible modules.
+Use `module keyword [key1 key2...]` to search for all possible modules matching any of the "keys".
 ~~~
 
-In order to load a module, you need to run "module load [modulename]".  Say for
-example you want to load R module, 
+In order to load a module, you need to run `module load [modulename]`.  Say for
+example you want to load the `R` package , 
 
 ~~~
 $ module load R 
 ~~~
 
-This sets up the R package for you. Now you can do some test calculations with R. 
+This sets up the `R` package for you. Now you can do some test calculations with R. 
 
 ~~~
 $ R # invoke R  
@@ -158,7 +157,7 @@ $ tutorial # will print a list tutorials
 ~~~
 
 Say for example, you are interested in learning how to run R scripts on OSG, the 
-tutorial command sets up the R tutorial for you. 
+`tutorial` command sets up the R tutorial for you. 
 
 ~~~
 $ tutorial R  # prints the following message:
@@ -168,7 +167,7 @@ Tutorial files installed in ./tutorial-R.
 Running setup in ./tutorial-R...
 ~~~ 
 
-The "tutorial R" command creates a directory "tutorial-R" containing the neccessary script and input files. 
+The `tutorial R` command creates a directory `tutorial-R` containing the neccessary script and input files. 
 
 ~~~
 mcpi.R      # The example R script file
@@ -176,11 +175,11 @@ R-wrapper.sh # The job execution file
 R.submit  # The job submission file (will discuss later in the lesson HTCondor scripts)
 ~~~
 
-Lets focus on "mcpi.R" and the "R-wrapper" scripts. The details of "R.submit" script 
+Lets focus on `mcpi.R` and the `R-wrapper` scripts. The details of `R.submit` script 
 will be discussed later when we learn HTCondor scripts.  
 
-The file "mcpi.R" is a R script that calculates the value of *pi* using the Monte Carlo
-method.  The R-wrapper.sh essentially loads the R module and runs the "mcpi.R" 
+The file `mcpi.R` is a R script that calculates the value of *pi* using the Monte Carlo
+method.  The `R-wrapper.sh` essentially loads the R module and runs the `mcpi.R`
 script. 
 
 ~~~
@@ -208,7 +207,7 @@ calculations on OSG.
 *   OSG resources are distributed across 120 institutions and  supports scientific computing of 2 million core CPU hours per day.   
 *   Many scientific applications are installed on OSG and available for the users. 
 *   To use an existing application use the module load command. 
-*   The command - *tutorial* helps to access the existing tutorials.  
+*   The command - `tutorial` helps to access the existing tutorials.  
 </div>
 
 
