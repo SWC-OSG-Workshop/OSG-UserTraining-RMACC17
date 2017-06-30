@@ -1,12 +1,12 @@
 ---
 layout: lesson
 root: ../..
-title: condor_annex on OSG Connect
+title: Adding Resources from Amazon AWS
 ---
 <div class="objectives" markdown="1">
 
 #### Objectives
-*   Discover how to use condor_annex to bring resources from Amazon AWS
+*   Discover how to use condor_annex to add dedicated resources from Amazon AWS
 </div>
 
 Please note that his is a technical preview. We expect features and interface
@@ -15,61 +15,81 @@ user-support@opensciencegrid.org
 
 <h2>condor_annex</h2>
 
-* The condor_annex tool was first released last week, in HTCondor 8.7.0
+* The condor_annex tool is available in the HTCondor 8.7.2 development release
 * Labeled as “experimental” because the interface(s) might change
-* First version has limited functionality and hence limited applicability
+* The current version has limited functionality and hence limited applicability
 
 Use cases
 
 * Deadlines
-* Capability - large memory, GPU, fast local storage, job policies
+* Capability - large memory, GPU, long run times, fast local storage, job policies
 * Capacity
 
-<h2>Setting up OSG Connect for AWS access</h2>
+<h2>connect_annex</h2>
 
-Once you have created an `annex` user in the AWS IAM web interface, you
-will to run aws configure on the HTCondor submit host (training.osgconnect.net).
-When prompted, enter your AWS Access Key, AWS Secret Access Key from your saved
-credentials.csv file. You will also need to set the default region to us-east-1,
-and change the default output format type to json, as shown below:
+Simple wrapper around condor_annex. 
 
-    [osguser00@training ~]$ aws configure
-    AWS Access Key ID [None]: ****************4FSQ
-    AWS Secret Access Key [None]: ****************RbV6
-    Default region name [None]: us-east-1
-    Default output format [None]: json
+<h2>Setting up AWS access</h2>
+
+    $ mkdir ~/.condor
+    $ cd ~/.condor
+    $ touch publicKeyFile privateKeyFile
+    $ chmod 600 publicKeyFile privateKeyFile
+
+The last command ensures that only you can read or write to those files.
+
+To donwload a new pair of security tokens for condor_annex to use, go
+to the IAM console; log in if you need to. The following instructions
+assume you are logged in as a user with the privilege to create new
+users. (The 'root' user for any account has this privilege; other
+accounts may as well.)
+
+ 1. Click the "Add User" button.
+ 2. Enter name in the User name box; "annex-user" is a fine choice.
+ 3. Click the check box labelled "Programmatic access".
+ 4. Click the button labelled "Next: Permissions".
+ 5. Select "Attach existing policies directly".
+ 6. Type "AdministratorAccess" in the box labelled "Filter".
+ 7. Click the check box on the single line that will appear below (labelled "AdministratorAccess").
+ 8. Click the "Next: review" button (you may need to scroll down).
+ 9. Click the "Create user" button.
+ 10. From the line labelled "annex-user", copy the value in the column labelled "Access key ID" to accessKeyFile.
+ 11. On the line labelled "annex-user", click the "Show" link in the column labelled "Secret access key"; copy the revealed value to secretKeyFile.
+ 12. Hit the "Close" button.
+
+The 'annex-user' now has full privileges to your account. We're working
+on creating a CloudFormation template that will create a user with only
+the privileges condor_annex actually needs.
+
+<h2>Running the Setup Command</h2>
+
+The following command will setup your AWS account. It will create a
+number of persistent components, none of which will cost you anything
+to keep around. These components can take quite some time to create;
+condor_annex checks each for completion every ten seconds and prints an
+additional dot (past the first three) when it does so, to let you know
+that everything's still working.
+
+    $ connect_annex -setup
+    Creating configuration bucket (this takes less than a minute)....... complete.
+    Creating Lambda functions (this takes about a minute)........ complete.
+    Creating instance profile (this takes about two minutes)................... complete.
+    Creating security group (this takes less than a minute)..... complete.
+    Setup successful.
+
+<h2>Checking the Setup</h2>
+
+You can verify at this point (or any later time) that the setup procedure completed successfully by running the following command.
+
+    $ connect_annex -check-setup
+    Checking for configuration bucket... OK.
+    Checking for Lambda functions... OK.
+    Checking for instance profile... OK.
+    Checking for security group... OK.
+    Your setup looks OK.
 
 
-<h2>setup-annex</h2>
 
-To launch HTCondor workers on AWS, you’ll need to run the setup-annex
-script provided on training.osgconnect.net. This script requires the
-following three options: 
-
-    --keypair : The name of the keypair installed into the root account of the Annex 
-    --vpc     : The Virtual Private Cloud to be used by HTCondor Annex
-    --subnets : The subnetwork used in your VPC
-
-For example:
-
-    [osguser00@training ~]$ setup-annex --keypair lb-condor-test --vpc vpc-c4c27ca1 --subnets subnet-a4958b8c
-    Using 'hnqcr3juafqfx7pg' as project ID.
-    The stack will be named 'htcondor-annex-condor-grid-uchicago-edu-hnqcr3juafqfx7pg'.
-    Checking to see if annex already exists... no.
-    Checking VPC for suitability:
-        DNS resolution... enabled
-        DNS hostnames... enabled
-    VPC is suitable.
-    Creating private S3 bucket to store pool password... done.
-    Uploading pool password file... done.
-    Uploading config file... done.
-    Starting annex (creating stack)... done.
-    Waiting for annex to create autoscaling groups... currently 0....................... .......................... done.
-    Splitting annex's desired size among 1 autoscaling groups... 1 done.
-    Waiting for annex to become size 6... currently 0........... done.
-    Waiting for count of annex instances in pool to become 5... done.
-
-For purposes of the demo, the setup-annex helper script will create 1 worker node with a spot market bid of $0.30/hr. Each worker node has 4 cores and 7.5GB of RAM. 
 
 
 <h2>Running jobs on the EC2 instances</h2>
