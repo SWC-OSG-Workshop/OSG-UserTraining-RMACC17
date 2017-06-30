@@ -50,7 +50,10 @@ accounts may as well.)
  4. Click the button labelled __Next: Permissions__.
  5. Select __Attach existing policies directly__.
  6. Type __AdministratorAccess__ in the box labelled "Filter".
- 7. Click the check box on the single line that will appear below (labelled __AdministratorAccess__).
+ 7. Click the check box on the single line that will appear below (labelled __AdministratorAccess__)
+
+![IAM](Images/IAM-NewUserRole.png)
+
  8. Click the __Next: review__ button (you may need to scroll down).
  9. Click the __Create user__ button.
  10. From the line labelled annex-user, copy the value in the column labelled __Access key ID__ to `accessKeyFile`.
