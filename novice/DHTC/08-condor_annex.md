@@ -30,14 +30,18 @@ integration. Please use `connect_annex` in this tutorial.
 
 <h2>Setting up AWS access</h2>
 
-    $ mkdir ~/.condor
+It is assumed at this point that you already have your AWS account setup and verified.
+Now it is time to create an AWS user, and provide the credentials of that users to
+`condor_annex`. Start by creating the destination files for the credentials:
+
+    $ mkdir -p ~/.condor
     $ cd ~/.condor
     $ touch publicKeyFile privateKeyFile
     $ chmod 600 publicKeyFile privateKeyFile
 
 The last command ensures that only you can read or write to those files.
 
-To donwload a new pair of security tokens for `condor_annex` to use, go
+To generate and donwload a new pair of security tokens for `condor_annex` to use, go
 to the [IAM console](https://console.aws.amazon.com/iam/home?region=us-east-1#/home)
 ; log in if you need to. The following instructions
 assume you are logged in as a user with the privilege to create new
@@ -64,7 +68,7 @@ The 'annex-user' now has full privileges to your account. We're working
 on creating a CloudFormation template that will create a user with only
 the privileges `condor_annex` actually needs.
 
-<h2>Running the Setup Command</h2>
+`<h2>Running the Setup Command</h2>
 
 The following command will setup your AWS account. It will create a
 number of persistent components, none of which will cost you anything
@@ -92,10 +96,30 @@ You can verify at this point (or any later time) that the setup procedure comple
     Your setup looks OK.
 
 
+<h2>Our first annex</h2>
 
+    $ connect_annex -count 1 \
+                    -annex-name MyFirstAnnex \
+                    -duration 0.83 \
+                    -idle 0.25 \
+                    -aws-on-demand-ami-id ami-24a29032
 
+This should start the process of bringing one VM up. *Duration*, which
+is the max lifetime of the VM, is set to 50 minutes. This lifetime is
+intended to help you conserve money by preventing the annex instances
+from accidentally running forever. *Idle* is set to 15 minutes, which
+is the amount of time the VM can sit without any jobs running before
+terminating.
 
-<h2>Running jobs on the EC2 instances</h2>
+The specified image (AMI), is a pre-defined OSG Connect image, containing
+a basic OSG software stack. You can make custom images if you want to.
+
+After a few minutes, we should be able to see the new resource show 
+up in or HTCondor pool:
+
+    $ condor_status -annex MyFirstAnnex
+
+<h2>Running jobs exclusively on AWS instances</h2>
 
 Run the quickstart tutorial:
 

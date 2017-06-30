@@ -117,27 +117,45 @@ Submitting job(s).
 
 ##Job status##
 
-The `condor_q` command tells the status of currently running jobs. Generally you will want to limit it to your own jobs:
+The `condor_q` command tells the status of currently running jobs. Note that the
+`condor_q` command line interface has changed in recent HTCondor versions, and in 
+this tutorial we are using the new version.
 
 ~~~
-$ condor_q username
+$ condor_q
 
+-- Schedd: training.osgconnect.net : <192.170.227.119:9618?... @ 06/30/17 15:17:51
+OWNER    BATCH_NAME       SUBMITTED   DONE   RUN    IDLE  TOTAL JOB_IDS
+username CMD: short.sh   6/30 15:17      _      _      1      1 1872.0
 
-
--- Schedd: training.osgconnect.net : <192.170.227.119:9419?...
- ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
-1144.0   username       3/6  00:17   0+00:00:00 I  0   0.0  short.sh
-
-1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended
+Total for query: 1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended 
+Total for username: 1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended 
+Total for all users: 1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended
 
 ~~~
 
-If you want to see all jobs running on the system, use condor_q without any extra parameters.
+This new output format "batches" similar jobs together. If you want to see each
+individual job, use `-nobatch`:
+
+~~~
+$ condor_q -nobatch
+
+-- Schedd: training.osgconnect.net : <192.170.227.119:9618?... @ 06/30/17 15:19:21
+ ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD
+1873.0   rynge           6/30 15:19   0+00:00:00 I  0    0.0 short.sh
+
+Total for query: 1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended 
+Total for rynge: 1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended 
+Total for all users: 1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended
+
+~~~
+
+If you want to see all jobs running on the system, use `condor_q -allusers`.
+
 You can also get status on a specific job cluster:
 
 ~~~
-$ condor_q 1144.0 
-
+$ condor_q -nobatch 1144.0 
 
 -- Schedd: training.osgconnect.net : <192.170.227.119:9419?...
  ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
