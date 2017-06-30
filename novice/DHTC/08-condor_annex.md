@@ -221,18 +221,7 @@ which makes sense on cloud resources.  From the
 
 ### Jobs across OSG and AWS
 
-We will now edit the `ec2-job.submit` file, so that the requirements 
-expression allows the job to go to either OSG or EC2. The new requirements
-line should read:
-
-    Requirements = regexp("ec2.internal", Machine) || (OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64")
-
-Let's also run a set of jobs. Change the queue line to read:
-
-    Queue 20
-
-The submit the job again.
-
+....
 
 ### Where did jobs run? 
 
