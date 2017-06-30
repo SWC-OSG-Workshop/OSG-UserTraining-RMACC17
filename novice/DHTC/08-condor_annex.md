@@ -12,7 +12,7 @@ title: Adding Resources from Amazon AWS
 </div>
 
 
-<h2>condor_annex (and connect_annex)</h2>
+## condor_annex (and connect_annex)
 
 * The `condor_annex` tool is available in the HTCondor 8.7.2 development release
 * Labeled as “experimental” because the interface(s) might change
@@ -28,7 +28,7 @@ Use cases
 integration. Please use `connect_annex` in this tutorial.
 
 
-<h2>Setting up AWS access</h2>
+## Setting up AWS access
 
 It is assumed at this point that you already have your AWS account setup and verified.
 Now it is time to create an AWS user, and provide the credentials of that users to
@@ -68,12 +68,13 @@ The 'annex-user' now has full privileges to your account. We're working
 on creating a CloudFormation template that will create a user with only
 the privileges `condor_annex` actually needs.
 
-`<h2>Running the Setup Command</h2>
+
+## Running the Setup Command
 
 The following command will setup your AWS account. It will create a
 number of persistent components, none of which will cost you anything
 to keep around. These components can take quite some time to create;
-condor_annex checks each for completion every ten seconds and prints an
+`condor_annex` checks each for completion every ten seconds and prints an
 additional dot (past the first three) when it does so, to let you know
 that everything's still working.
 
@@ -84,7 +85,8 @@ that everything's still working.
     Creating security group (this takes less than a minute)..... complete.
     Setup successful.
 
-<h2>Checking the Setup</h2>
+
+## Verifying the Setup
 
 You can verify at this point (or any later time) that the setup procedure completed successfully by running the following command.
 
@@ -96,7 +98,7 @@ You can verify at this point (or any later time) that the setup procedure comple
     Your setup looks OK.
 
 
-<h2>Our first annex</h2>
+## Our first annex
 
     $ connect_annex -count 1 \
                     -annex-name MyFirstAnnex \
@@ -119,15 +121,13 @@ up in or HTCondor pool:
 
     $ condor_status -annex MyFirstAnnex
 
-<h2>Running jobs exclusively on AWS instances</h2>
 
-Run the quickstart tutorial:
+## Running jobs exclusively on AWS instances
+
+Download the annex tutorial:
 
 	$ tutorial annex
 	$ cd tutorial-annex
-
-Tutorial jobs
--------------
 
 Inside the tutorial directory you will find a sample executable:
 
@@ -142,22 +142,23 @@ Inside the tutorial directory you will find a sample executable:
 	sleep 20
 	echo "Science complete!"
 
+The first job we will look at is `aws-exclusive.submit`. Pay special attention
+to the *Requirements* and the *+MayUseAWS* attributes. The former locks the job
+to only run on AWS resources by matching part of the hostname, and the latter
+tells annex VMs that this job has been white-listed to run on AWS.
 
-### HTCondor submit file
-
-So far, so good! Let's look at a the submit file `ec2-job.submit`
-
-    # The UNIVERSE defines an execution environment. You will almost always use VANILLA.
     Universe = vanilla
     
-    # These are good base requirements for your jobs on OSG. It is specific on OS and
-    # OS version, core cound and memory, and wants to use the software modules. 
-    # This is the default recommended OSG requirements:
+    # Job requirements (OS, cores, memory, ...)
     #Requirements = OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64" &&  HAS_MODULES == True
-    # To make sure we are only running on EC2, use regex matching on the Machine attribute
-    Requirements = regexp("ec2.internal", Machine) 
+    Requirements = regexp("ec2.internal", Machine)
     request_cpus = 1
     request_memory = 1 GB
+    request_disk = 1 GB
+    
+    # By default, AWS resources only runs jobs flagged that they are
+    # allowed to run on AWS
+    +MayUseAWS = True
     
     # EXECUTABLE is the program your job will run It's often useful
     # to create a shell script to "wrap" your actual work.
@@ -183,64 +184,42 @@ So far, so good! Let's look at a the submit file `ec2-job.submit`
     # specified thus far.
     Queue 1
 
-
-### Submit the job 
-
 Submit the job using `condor_submit`:
 
-	$ condor_submit ec2-job.submit
+	$ condor_submit aws-exclusive.submit
 	Submitting job(s). 
 	1 job(s) submitted to cluster 823.
 
-### Check the job status
+Use your newly aquired `condor_q` skills to make sure the job runs and finishes.
+Then check the .out file. You should see something like:
 
-The `condor_q` command tells the status of currently running jobs.
-Generally you will want to limit it to your own jobs: 
+    Start time: Fri Jun 30 20:59:26 UTC 2017
+    Job is running on node: ip-172-31-27-108.ec2.internal
+    Job running as user: uid=99(nobody) gid=99(nobody) groups=99(nobody)
+    Job is running in directory: /scratch/condor/encrypted0/dir_2313
+    
+    Working hard...
+    Science complete!
 
-	$ condor_q netid
-	-- Submitter: login01.osgconnect.net : <128.135.158.173:43606> : login01.osgconnect.net
-	 ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD
-	 823.0   netid           8/21 09:46   0+00:00:06 R  0   0.0  short.sh
-	1 jobs; 0 completed, 0 removed, 0 idle, 1 running, 0 held, 0 suspended
+Notice how the job directory is encrypted. This is a nice new feature in HTCondor
+which makes sense on cloud resources.  From the
+(HTCondor 8.7 manual)[https://research.cs.wisc.edu/htcondor/manual/v8.7/3_5Configuration_Macros.html#SECTION00458000000000000000]
 
-You can also get status on a specific job cluster: 
-
-	$ condor_q 823
-	-- Submitter: login01.osgconnect.net : <128.135.158.173:43606> : login01.osgconnect.net
-	 ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD
-	 823.0   netid           8/21 09:46   0+00:00:10 R  0   0.0  short.sh
-	1 jobs; 0 completed, 0 removed, 0 idle, 1 running, 0 held, 0 suspended
-
-Note the `ST` (state) column. Your job will be in the I state (idle) if
-it hasn't started yet. If it's currently scheduled and running, it will
-have state `R` (running). If it has completed already, it will not appear
-in `condor_q`. 
-
-
-### Check the job output
-
-Once your job has finished, you can look at the files that HTCondor has
-returned to the working directory. If everything was successful, it
-should have returned:
-
-* a log file from HTCondor for the job cluster: jog.log
-* an output file for each job's output: job.output
-* an error file for each job's errors: job.error
-
-Read the output file. It should be something like this: 
-
-	$ cat job.output
-	Start time: Wed Aug 21 09:46:38 CDT 2013
-	Job is running on node: ip-12.12.12.12
-	Job running as user: uid=58704(osg) gid=58704(osg) groups=58704(osg)
-	Job is running in directory: /var/lib/condor/execute/dir_2120
-	Sleeping for 10 seconds...
-	Et voila!
-
-The `ip-NNN.NNN.NNN.NNN` indicates that the job ran in the EC2 instance.
+> ENCRYPT_EXECUTE_DIRECTORY
+> 
+> A boolean value that, when True, causes the execute directory for jobs
+> on Linux or Windows platforms to be encrypted. Defaults to False. Note
+> that even if False, the user can require encryption of the execute
+> directory on a per-job basis by setting encrypt_execute_directory to
+> True in the job submit description file. Enabling this functionality
+> requires that the HTCondor service is run as user root on Linux
+> platforms, or as a system service on Windows platforms. On Linux
+> platforms, the encryption method is ecryptfs, and therefore requires an
+> installation of the ecryptfs-utils package. On Windows platforms, the
+> encryption method is the EFS (Encrypted File System) feature of NTFS.
 
 
-### Jobs across OSG and Amazon EC2
+### Jobs across OSG and AWS
 
 We will now edit the `ec2-job.submit` file, so that the requirements 
 expression allows the job to go to either OSG or EC2. The new requirements
