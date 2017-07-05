@@ -221,7 +221,28 @@ which makes sense on cloud resources.  From the
 
 ### Jobs across OSG and AWS
 
-....
+If we want to run job on both OSG and AWS at the same time, we just need to adjust 
+the job `requirements`. Take a look at `aws-and-osg.submit`. The `requirements`
+section is:
+
+    # Job requirements (OS, cores, memory, ...)
+    # When running on both AWS and OSG, make sure you have a requirements
+    # line matching both resources. If you are using the supplied AMI,
+    # OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64" should be sufficient,
+    # or you can just always match on AWS resources separately.
+    # Examples:
+    #
+    #    OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64"
+    #
+    #    regexp("ec2.internal", Machine) || (OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64")
+    #
+    Requirements = regexp("ec2.internal", Machine) || (OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64")
+
+
+Make sure you still have at least one annex host active, and then submit the `aws-and-osg.submit` jobs. 
+
+    $ condor_submit aws-and-osg.submit
+
 
 ### Where did jobs run? 
 
@@ -230,7 +251,7 @@ be worth looking at where they run. To get that information, we'll use the
 `condor_history` command from quickstart tutorial.Change the job id (942)
 to the job id provided by the `condor_submit` command:
 
-	[netid@login01 log]$ condor_history -format '%s\n' LastRemoteHost 942 | cut -d@ -f2 | cut -d. -f2,3 | distribution --height=100
+	$ condor_history -format '%s\n' LastRemoteHost 942 | cut -d@ -f2 | cut -d. -f2,3 | distribution --height=100
 	Val          |Ct (Pct)     Histogram
 	ec2.internal |456 (46.77%) +++++++++++++++++++++++++++++++++++++++++++++++++++++
 	uchicago.edu |422 (43.28%) +++++++++++++++++++++++++++++++++++++++++++++++++
