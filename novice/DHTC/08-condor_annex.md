@@ -60,8 +60,8 @@ accounts may as well.)
 
  8. Click the __Next: review__ button (you may need to scroll down).
  9. Click the __Create user__ button.
- 10. From the line labelled annex-user, copy the value in the column labelled __Access key ID__ to `accessKeyFile`.
- 11. On the line labelled annex-user", click the __Show__ link in the column labelled __Secret access key__; copy the revealed value to `secretKeyFile`.
+ 10. From the line labelled annex-user, copy the value in the column labelled __Access key ID__ to `publicKeyFile`.
+ 11. On the line labelled annex-user", click the __Show__ link in the column labelled __Secret access key__; copy the revealed value to `privateKeyFile`.
  12. Hit the __Close__ button.
 
 The 'annex-user' now has full privileges to your account. We're working
