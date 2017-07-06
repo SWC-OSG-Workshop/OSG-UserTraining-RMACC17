@@ -91,7 +91,7 @@ You can verify at this point (or any later time) that the setup procedure comple
                     -annex-name MyFirstAnnex \
                     -duration 0.83 \
                     -idle 0.25 \
-                    -aws-on-demand-ami-id ami-24a29032
+                    -aws-on-demand-ami-id ami-a2a795b4
 
 This should start the process of bringing one VM up. *Duration*, which is the max lifetime of the VM, is set to 50 minutes. This lifetime is intended to help you conserve money by preventing the annex instances from accidentally running forever. *Idle* is set to 15 minutes, which is the amount of time the VM can sit without any jobs running before terminating.
 
