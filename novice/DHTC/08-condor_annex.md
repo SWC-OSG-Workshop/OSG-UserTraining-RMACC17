@@ -99,7 +99,7 @@ The specified image (AMI), is a pre-defined OSG Connect image, containing a basi
 
 After a few minutes, we should be able to see the new resource show up in or HTCondor pool:
 
-    $ condor_status -annex MyFirstAnnex
+    $ condor_status -annex MyFirstAnnex_$USER
 
 
 ## Running jobs exclusively on AWS instances
@@ -238,10 +238,101 @@ When we start submitting many simultaneous jobs into the queue, it might be wort
 The distribution program reduces a list of hostnames to a set of hostnames with no duplication (much like `sort | uniq -c`), but
 additionally plots a distribution histogram on your terminal window. This is nice for seeing how Condor selected your execution endpoints.
 
-<!-- <div class="keypoints" markdown="1">
+## Stop an Annex
 
-#### Key Points
-* OSG can schedule jobs to resources brought by the user
+The following command shuts HTCondor off on each instance in the annex; if you're using the default annex image, doing so causes each instance to shut itself down.
 
-</div> -->
+    $ condor_off -annex MyFirstAnnex_$USER
+    Sent "Kill-Daemon" command for "master" to master ip-172-31-48-84.ec2.internal
+
+## Spot Fleet
+
+condor_annex supports Spot instances via an AWS technology called 
+*Spot Fleet*. Normally, when you request instances, you request a specific
+type of instance (the default on-demand instance is, for instance,
+`m4.large`.) However, in many cases, you don't care too much about
+how many cores an intance has - HTCondor will automatically advertise
+the right number and schedule jobs appropriately, so why would you?
+In such cases - or in other cases where your jobs will run acceptably
+on more than one type of instance - you can make a Spot Fleet request
+which says something like "give me a thousand cores as cheaply as
+possible", and specify that an `m4.large` instance has two cores, while
+`m4.xlarge` has four, and so on. AWS will then divide the current price
+for each instance type by its core count and request spot instances at
+the cheapest per-core rate until the number of cores (not the number of
+instances!) has reached a thousand, or that instance type is exhausted,
+at which point it will request the next-cheapest instance type.
+
+In order to create an annex via a Spot Fleet, you'll need a file
+containing a JSON blob which describes the Spot Fleet request you'd like
+to make. (It's too complicated for a reasonable command-line interface.)
+The AWS web console can be used to create such a file; the button to
+download that file is (currently) in the upper-right corner of the last
+page before you submit the Spot Fleet request; it is labeled `JSON
+config'. You may need to create an IAM role the first time you make a
+Spot Fleet request; please do so before running condor_annex.
+
+Additionally, be aware that condor_annex uses the Spot Fleet API in its
+`request` mode, which means that an annex created with Spot Fleet has
+the same semantics with respect to replacement as it would otherwise: if
+an instance terminates for any reason, including AWS taking it away to
+give to someone else, it is not replaced.
+
+You must select the instance role profile used by your on-demand
+instances for condor_annex to work. This value will be stored in the
+configuration macro ANNEX_DEFAULT_ODI_INSTANCE_PROFILE_ARN by the setup
+procedure.
+
+    $ grep ANNEX_DEFAULT_ODI_INSTANCE_PROFILE_ARN ~/.condor/user_config
+    ANNEX_DEFAULT_ODI_INSTANCE_PROFILE_ARN = arn:aws:iam:...
+
+Go to [AWS Request Spot Instances](https://console.aws.amazon.com/ec2sp/v1/spot/home?region=us-east-1#)
+to get started. Click `Request Spot Instances`.
+
+Set target capacity to 5, and use `ami-a2a795b4` for the image.
+
+Select instance types: `c3.large` and `m4.xlarge`
+
+![Spot1](Images/Spot1.png)
+
+Make sure you select the correct instance role in the dropdown.
+
+![Spot2](Images/Spot2.png)
+
+Download the JSON file from the upper right corner. Do _not_ finish the guide.
+
+![Spot3](Images/Spot3.png)
+
+Copy the json file to `~/.condor/fleet.json` under your account on training.osgconnect.net.
+
+    $ connect_annex -annex-name SpotAnnex_$USER \
+                    -slots 5 \
+                    -aws-spot-fleet-config-file ~/.condor/fleet.json 
+    Will request 5 spot slots for 0.83 hours.  Each instance will terminate after being idle for 0.25 hours.
+    Is that OK?  (Type 'yes' or 'no'): yes
+    Starting annex...
+    Annex started. It will take about six minutes for the new machines to join the pool.
+
+If you go back to your [AWS EC2 Instances console](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:sort=instanceId)
+you will find the spot instances starting up.
+
+![Spot4](Images/Spot4.png)
+
+As in the on-demand case, we can check on the instances with `condor_status -annex`
+
+    $ condor_status -annex SpotAnnex_$USER
+    Name                                OpSys      Arch   State     Activity LoadAv Mem   ActvtyTime
+    
+    slot1@ip-172-31-80-9.ec2.internal   LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:23
+    slot2@ip-172-31-80-9.ec2.internal   LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:30
+    slot1@ip-172-31-82-119.ec2.internal LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:16
+    slot2@ip-172-31-82-119.ec2.internal LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:22
+    slot1@ip-172-31-86-220.ec2.internal LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:23
+    slot2@ip-172-31-86-220.ec2.internal LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:29
+    
+                         Machines Owner Claimed Unclaimed Matched Preempting  Drain
+    
+            X86_64/LINUX        6    0       0         6       0          0      0
+    
+                   Total        6    0       0         6       0          0      0
 
