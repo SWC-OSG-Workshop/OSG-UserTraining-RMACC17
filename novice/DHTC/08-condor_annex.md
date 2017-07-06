@@ -180,7 +180,7 @@ Then check the .out file. You should see something like:
 
 Notice how the job directory is encrypted. This is a nice new feature in HTCondor
 which makes sense on cloud resources.  From the
-(HTCondor 8.7 manual)[https://research.cs.wisc.edu/htcondor/manual/v8.7/3_5Configuration_Macros.html#SECTION00458000000000000000]
+[HTCondor 8.7 manual](https://research.cs.wisc.edu/htcondor/manual/v8.7/3_5Configuration_Macros.html#SECTION00458000000000000000)
 
 > ENCRYPT_EXECUTE_DIRECTORY
 > 
