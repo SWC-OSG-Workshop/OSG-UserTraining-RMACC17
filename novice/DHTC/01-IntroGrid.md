@@ -13,7 +13,7 @@ title: Introduction to Open Science Grid
 
 </div> -->
 
-## Introduction to Open Science Grid
+## The Open Science Grid
 
 The Open Science Grid (OSG) is a consortium of research communities which facilitates distributed [high throughput computing](http://en.wikipedia.org/wiki/High-throughput_computing) for scientific research. The OSG
 

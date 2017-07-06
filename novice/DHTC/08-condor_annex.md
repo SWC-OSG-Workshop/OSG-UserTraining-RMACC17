@@ -14,7 +14,7 @@ title: Adding Resources from Amazon AWS
 
 ## condor_annex
 
-`condor_annex` is a tool inside HTCondor that allows the user add cloud resources, such as AWS, to their "pool" of available resources. Please note:
+`condor_annex` is a HTCondor tool that allows you to add cloud resources, such as Amazon Web Services (AWS), to their "pool" of resources. Please note:
 
 * The `condor_annex` tool is available in the HTCondor 8.7.2 development release
 * Labeled as “experimental” because the interface(s) might change
