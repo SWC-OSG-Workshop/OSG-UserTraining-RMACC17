@@ -3,16 +3,18 @@ layout: lesson
 root: ../..
 title: Adding Resources from Amazon AWS
 ---
-<div class="objectives" markdown="1">
+<!-- <div class="objectives" markdown="1">
 
 #### Objectives
 *   Discover how to use `condor_annex` to add dedicated resources from Amazon AWS
 *   Submit workloads to AWS, and to OSG and AWS simultaneously
 *   Please note that his is a technical preview. We expect features and interface to change rapidly.
-</div>
+</div> -->
 
 
-## condor_annex (and connect_annex)
+## condor_annex
+
+`condor_annex` is a tool inside HTCondor that allows the user add cloud resources, such as AWS, to their "pool" of available resources. Please note:
 
 * The `condor_annex` tool is available in the HTCondor 8.7.2 development release
 * Labeled as “experimental” because the interface(s) might change
@@ -24,15 +26,12 @@ Use cases
 * Capability - large memory, GPU, long run times, fast local storage, job policies
 * Capacity
 
-`connect_annex` is a wrapper around `condor_annex` which provides some OSG Connect
-integration. Please use `connect_annex` in this tutorial.
+`connect_annex` is a wrapper around `condor_annex` which provides some OSG Connect integration. Please use `connect_annex` in this tutorial.
 
 
 ## Setting up AWS access
 
-It is assumed at this point that you already have your AWS account setup and verified.
-Now it is time to create an AWS user, and provide the credentials of that users to
-`condor_annex`. Start by creating the destination files for the credentials:
+It is assumed at this point that you already have your AWS account setup and verified. Now it is time to create an AWS user, and provide the credentials of that users to `condor_annex`. Start by creating the destination files for the credentials:
 
     $ mkdir -p ~/.condor
     $ cd ~/.condor
@@ -41,12 +40,7 @@ Now it is time to create an AWS user, and provide the credentials of that users 
 
 The last command ensures that only you can read or write to those files.
 
-To generate and donwload a new pair of security tokens for `condor_annex` to use, go
-to the [IAM console](https://console.aws.amazon.com/iam/home?region=us-east-1#/home)
-; log in if you need to. The following instructions
-assume you are logged in as a user with the privilege to create new
-users. (The 'root' user for any account has this privilege; other
-accounts may as well.)
+To generate and donwload a new pair of security tokens for `condor_annex` to use, go to the [IAM console](https://console.aws.amazon.com/iam/home?region=us-east-1#/home); log in if you need to. The following instructions assume you are logged in as a user with the privilege to create new users. (The 'root' user for any account has this privilege; other accounts may as well.)
 
  1. Click the __Add User__ button.
  2. Enter name in the User name box; __annex-user__ is a fine choice.
@@ -64,19 +58,12 @@ accounts may as well.)
  11. On the line labelled annex-user", click the __Show__ link in the column labelled __Secret access key__; copy the revealed value to `privateKeyFile`.
  12. Hit the __Close__ button.
 
-The 'annex-user' now has full privileges to your account. We're working
-on creating a CloudFormation template that will create a user with only
-the privileges `condor_annex` actually needs.
+The 'annex-user' now has full privileges to your account. We're working on creating a CloudFormation template that will create a user with only the privileges `condor_annex` actually needs.
 
 
 ## Running the Setup Command
 
-The following command will setup your AWS account. It will create a
-number of persistent components, none of which will cost you anything
-to keep around. These components can take quite some time to create;
-`condor_annex` checks each for completion every ten seconds and prints an
-additional dot (past the first three) when it does so, to let you know
-that everything's still working.
+The following command will setup your AWS account. It will create a number of persistent components, none of which will cost you anything to keep around. These components can take quite some time to create; `condor_annex` checks each for completion every ten seconds and prints an additional dot (past the first three) when it does so, to let you know that everything's still working.
 
     $ connect_annex -setup
     Creating configuration bucket (this takes less than a minute)....... complete.
@@ -106,18 +93,11 @@ You can verify at this point (or any later time) that the setup procedure comple
                     -idle 0.25 \
                     -aws-on-demand-ami-id ami-24a29032
 
-This should start the process of bringing one VM up. *Duration*, which
-is the max lifetime of the VM, is set to 50 minutes. This lifetime is
-intended to help you conserve money by preventing the annex instances
-from accidentally running forever. *Idle* is set to 15 minutes, which
-is the amount of time the VM can sit without any jobs running before
-terminating.
+This should start the process of bringing one VM up. *Duration*, which is the max lifetime of the VM, is set to 50 minutes. This lifetime is intended to help you conserve money by preventing the annex instances from accidentally running forever. *Idle* is set to 15 minutes, which is the amount of time the VM can sit without any jobs running before terminating.
 
-The specified image (AMI), is a pre-defined OSG Connect image, containing
-a basic OSG software stack. You can make custom images if you want to.
+The specified image (AMI), is a pre-defined OSG Connect image, containing a basic OSG software stack. You can make custom images if you want to.
 
-After a few minutes, we should be able to see the new resource show 
-up in or HTCondor pool:
+After a few minutes, we should be able to see the new resource show up in or HTCondor pool:
 
     $ condor_status -annex MyFirstAnnex
 
@@ -142,10 +122,7 @@ Inside the tutorial directory you will find a sample executable:
 	sleep 20
 	echo "Science complete!"
 
-The first job we will look at is `aws-exclusive.submit`. Pay special attention
-to the *Requirements* and the *+MayUseAWS* attributes. The former locks the job
-to only run on AWS resources by matching part of the hostname, and the latter
-tells annex VMs that this job has been white-listed to run on AWS.
+The first job we will look at is `aws-exclusive.submit`. Pay special attention to the *Requirements* and the *+MayUseAWS* attributes. The former locks the job to only run on AWS resources by matching part of the hostname, and the latter tells annex VMs that this job has been white-listed to run on AWS.
 
     Universe = vanilla
     
@@ -246,10 +223,7 @@ Make sure you still have at least one annex host active, and then submit the `aw
 
 ### Where did jobs run? 
 
-When we start submitting many simultaneous jobs into the queue, it might
-be worth looking at where they run. To get that information, we'll use the
-`condor_history` command from quickstart tutorial.Change the job id (942)
-to the job id provided by the `condor_submit` command:
+When we start submitting many simultaneous jobs into the queue, it might be worth looking at where they run. To get that information, we'll use the `condor_history` command from quickstart tutorial.Change the job id (942) to the job id provided by the `condor_submit` command:
 
 	$ condor_history -format '%s\n' LastRemoteHost 942 | cut -d@ -f2 | cut -d. -f2,3 | distribution --height=100
 	Val          |Ct (Pct)     Histogram
@@ -261,16 +235,13 @@ to the job id provided by the `condor_submit` command:
 	tusker.hcc   |10 (1.03%)   ++
 	...
 
-The distribution program reduces a list of hostnames to a set of
-hostnames with no duplication (much like `sort | uniq -c`), but
-additionally plots a distribution histogram on your terminal
-window. This is nice for seeing how Condor selected your execution
-endpoints.
+The distribution program reduces a list of hostnames to a set of hostnames with no duplication (much like `sort | uniq -c`), but
+additionally plots a distribution histogram on your terminal window. This is nice for seeing how Condor selected your execution endpoints.
 
-<div class="keypoints" markdown="1">
+<!-- <div class="keypoints" markdown="1">
 
 #### Key Points
 * OSG can schedule jobs to resources brought by the user
 
-</div>
+</div> -->
 

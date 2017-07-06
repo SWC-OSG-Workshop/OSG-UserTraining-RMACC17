@@ -1,8 +1,6 @@
 The webpage is located at https://swc-osg-workshop.github.io/OSG-UserTraining-PEARC17
 
-============================
-#Software Carpentry - Open Science Grid (SWC-OSG) Workshop#
-============================
+# Software Carpentry - Open Science Grid (SWC-OSG) Workshop#
 
 We work directly on the `gh-pages` as it is useful for the website 
 rendering. GitHub renders the website from the HTML and markdown 
@@ -31,30 +29,29 @@ The sections below explain:
 *   [Workshop Front Page](#workshop-frontpage)
 *   [New Repo for a New Workshop](#new-repo)
 
-##Getting Started##
----------------
+## Getting Started
 
 
 Now let us see how to make a copy of the existing repo on your locale machine.  In your local 
 desktop or laptop, clone the repo 
 
-    ~~~
-     git clone https://github.com/SWC-OSG-Workshop/general.git
-    ~~~
+```
+git clone https://github.com/SWC-OSG-Workshop/general.git
+```
 
 and create new branch named `gh-pages`.
 
-    ~~~
-     git checkout -b gh-pages
-    ~~~
+```
+git checkout -b gh-pages
+```
 
 Now pull the content repository's `gh-pages` branch into your desktop repository:
 
-    ~~~
-     git pull origin gh-pages
-    ~~~
-##Lesson Material##
----------------
+```
+git pull origin gh-pages
+```
+
+## Lesson Material
 
 The current material is in the directories under `novice`. The shell and Git materials are 
 written in Markdown, while the Python and SQL use the IPython Notebook. 
@@ -62,16 +59,15 @@ written in Markdown, while the Python and SQL use the IPython Notebook.
 The material related to OSG is in the directory `novice/DHTC` and are written in Markdown.  Once 
 finished editing the material at `novice/DHTC/filename.md`, push the content to the repository:
 
-    ~~~
-     git add filename.md
-     git commit -m "some message here about the changes " 
-     git push origin gh-pages
-    ~~~
+```
+git add filename.md
+git commit -m "some message here about the changes " 
+git push origin gh-pages
+```
 
 
+## Workshop Front Page
 
-##Workshop Front Page##
--------------------
 
 Editing workshop front page involves editing html pages. Two html files are of 
 primary interest to us. One is the "index.html" and other is "_includes/setup.html".
@@ -88,16 +84,17 @@ Edit `index.html` to make any changes to the workshop home page.
 Edit `_includes/setup.html` to provide software installation instructions for the workshop attendees.
 
 Once finished editing the index.html, push content to the repository:
-~~~
-     git add index.html
-     git commit -m "some message here about the changes " 
-     git push origin gh-pages
-~~~
+
+```
+git add index.html
+git commit -m "some message here about the changes " 
+git push origin gh-pages
+```
 
 As soon as the repo has been pushed to GitHub, GitHub will render the pages
-at the url(http://swc-osg-workshop.github.io/general)
+at the [url](http://swc-osg-workshop.github.io/general)
 
-##New Repo for a New Workshop##
+## New Repo for a New Workshop
 
 As soon as the workshop date is finalized, create a repo by the name
 `YYYY-MM-DD`, where `YYYY` is the year, `MM` is the month and `DD` is the
@@ -107,14 +104,14 @@ the course material and web content from the `general` repo.  This can done in y
 Desktop or Laptop, type
 the followings
 
-~~~
- git clone https://github.com/SWC-OSG-Workshop/YYYY-MM-DD.git
- cd YYYY-MM-DD 
- git checkout -b gh-pages 
- git remote add general https://github.com/SWC-OSG-Workshop/general.git 
- git pull general gh-pages 
- git remote remove general 
-~~~
+```
+git clone https://github.com/SWC-OSG-Workshop/YYYY-MM-DD.git
+cd YYYY-MM-DD 
+git checkout -b gh-pages 
+git remote add general https://github.com/SWC-OSG-Workshop/general.git 
+git pull general gh-pages 
+git remote remove general 
+```
 
 Now you will have to change the workshop front page in the current repo `YYYY-MM-DD.git` as 
 outlined in the previous section.  
