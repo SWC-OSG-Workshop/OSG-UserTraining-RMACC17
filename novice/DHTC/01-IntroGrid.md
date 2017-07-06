@@ -24,6 +24,9 @@ The Open Science Grid (OSG) is a consortium of research communities which facili
 The OSG provides the unused compute resources at the various OSG contributors opportunistically in an shared pool to outside researchers. This means that resource availability may vary greatly with time. 
 
 
+![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-PEARC17/gh-pages/images/osg_job_flow.png)
+
+
 ## Computation that is a good match for OSG 
 
 High throughput work flows with simple system and data dependencies are a good fit for OSG. Typically, these work flows can be broken down into multiple tasks that can be carried out independently. Ideally, these tasks will download input data, run some computation on it and then return results (which may be used by future tasks).
