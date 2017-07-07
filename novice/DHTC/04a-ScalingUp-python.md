@@ -92,10 +92,10 @@ If we want to submit several jobs, we need to track log, out and error files for
 
     # executable is the program your job will run It's often useful
     # to create a shell script to "wrap" your actual work.
-    executable = scalingup-python-wrapper.sh 
+    executable = ../scalingup-python-wrapper.sh 
 
     # files transferred into the job sandbox
-    transfer_input_files = rosen_brock_brute_opt.py
+    transfer_input_files = ../rosen_brock_brute_opt.py
 
     # error and output are the error and output channels from your job
     # that HTCondor returns from the remote host.
@@ -123,7 +123,7 @@ If we want to submit several jobs, we need to track log, out and error files for
     # specified thus far.
     queue 10
 
-Note the `Queue 10`. This tells HTCondor to queue 10 copies of this job under one cluster id.  
+Note the `queue 10`. This tells HTCondor to queue 10 copies of this job under one cluster id.  
 
 Let us submit the above job
 
@@ -131,9 +131,9 @@ Let us submit the above job
     Submitting job(s)..........
     10 job(s) submitted to cluster 329837.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_script.sh` script to sort the results. 
+Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh` script to sort the results. 
 
-    ./post_script.sh
+    ./post_process.sh
 
 ## Other ways to use `queue` command
 
@@ -143,7 +143,7 @@ Now we will explore other ways to use `queue` command. In the previous example, 
 
 ![fig 4](https://raw.githubusercontent.com/OSGConnect/tutorial-ScalingUp-Python/master/Images/Slide3.png)
 
-We can still use a slightly modified version of job description file from the previous example to supply multiple arguments. The modified job description file is available in `Example2` directory and take look at the end of job description file `ScalingUp-PythonCals.submit`:  
+We can still use a slightly modified version of job description file from the previous example to supply multiple arguments. The modified job description file is available in the `Example2` directory.  Move into that directory and take look at the end of job description file `ScalingUp-PythonCals.submit`:  
 
     $ cd ../Example2
     $ cat  ScalingUp-PythonCals.submit
@@ -154,12 +154,12 @@ We can still use a slightly modified version of job description file from the pr
 
     # Queue is the "start button" - it launches any jobs that have been
     # specified thus far.
-    Queue
+    queue
 
     arguments = -8 8 -8 8
     queue 
 
-    arguments = -8 8 -8 8
+    arguments = -7 7 -7 7
     queue 
     [...]
 
@@ -169,11 +169,11 @@ Let us submit the above job
 
     $ condor_submit ScalingUp-PythonCals.submit
     Submitting job(s)..........
-    10 job(s) submitted to cluster 329838.
+    9 job(s) submitted to cluster 329838.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_script.sh  script to sort the results. 
+Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
 
-    ./post_script.sh
+    ./post_process.sh
 
 ## Variable expansion via `queue` command
 
@@ -181,7 +181,8 @@ Apply your `condor_q` and `connect watch` knowledge to see this job progress. Af
 
 In the above example, we had to type `argument` and `queue` expressions repeatedly. There is a way to implement compact queue expression and expand the arguments for each job. Take a look at the job description file in Example3. 
 
-    $ cat ../Example3/ScalingUp-PythonCals.submit
+    $ cd ../Example3
+    $ cat ScalingUp-PythonCals.submit
     [...]
     queue arguments from (
     -9 9 -9 9 
@@ -199,15 +200,15 @@ Let us submit the above job
 
     $ condor_submit ScalingUp-PythonCals.submit
     Submitting job(s)..........
-    10 job(s) submitted to cluster 329839.
+    9 job(s) submitted to cluster 329839.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_script.sh  script to sort the results. 
+Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
 
-    ./post_script.sh
+    ./post_process.sh
 
 In fact, we could define variables and assign them to HTCondor's expression. This is illustrated in Example 4. 
 
-    $ cd Example4
+    $ cd ../Example4
     $ cat ScalingUp-PythonCals.submit
 
     [...]
@@ -232,11 +233,11 @@ Let us submit the above job
 
     $ condor_submit ScalingUp-PythonCals.submit
     Submitting job(s)..........
-    10 job(s) submitted to cluster 329840.
+    9 job(s) submitted to cluster 329840.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_script.sh  script to sort the results. 
+Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
 
-    ./post_script.sh
+    ./post_process.sh
 
 ## Beyond the `queue` command
 
