@@ -251,7 +251,7 @@ HTCondor takes a list of classads from jobs and from compute nodes and then trie
 
 ## A Basic OSG Job
 
-You can make use any of these attributes to limit where your jobs go. The osg-template-job.submit file is an example of a fairly complete OSG job which you can use as a template submit script when getting started on OSG. Note the `Requirements` and `requests_*` lines.
+You can make use any of these attributes to limit where your jobs go. The `osg-template-job.submit` file is an example of a fairly complete OSG job which you can use as a template submit script when getting started on OSG. Note the `Requirements` and `requests_*` lines.
 
 
     # The UNIVERSE defines an execution environment. You will almost always use VANILLA.
