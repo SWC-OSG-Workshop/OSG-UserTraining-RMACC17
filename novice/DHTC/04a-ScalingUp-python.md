@@ -90,8 +90,8 @@ If we want to submit several jobs, we need to track log, out and error files for
     request_cpus = 1
     request_memory = 1 GB
 
-    # executable is the program your job will run It's often useful
-    # to create a shell script to "wrap" your actual work.
+    # executable is the program your job will run 
+    # It's often useful to create a shell script to "wrap" your actual work.
     executable = ../scalingup-python-wrapper.sh 
 
     # files transferred into the job sandbox
