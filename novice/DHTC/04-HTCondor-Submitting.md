@@ -258,7 +258,7 @@ You can make use any of these attributes to limit where your jobs go. The `osg-t
     Universe = vanilla
 
     # These are good base requirements for your jobs on OSG. It is specific on OS and
-    # OS version, core cound and memory, and wants to use the software modules. 
+    # OS version, core count and memory, and wants to use the software modules. 
     Requirements = OSGVO_OS_STRING == "RHEL 6" && Arch == "X86_64" && HAS_MODULES == True
     request_cpus = 1
     request_memory = 1 GB
