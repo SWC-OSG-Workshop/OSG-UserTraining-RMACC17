@@ -33,7 +33,7 @@ RSA key fingerprint is SHA256:KRH0+kF1V5kNookplCt2f+lH4dKaZLowKbEevNnVmKY.
 Are you sure you want to continue connecting (yes/no)?
 ```
 
-This is normal when connecting to a new host for the first time. If prompted, type 'yes'.
+This is normal when connecting to a new host for the first time. If prompted, type `yes`.
 
 ## Job execution script
 
