@@ -24,7 +24,7 @@ If you are still logged in from the previous lesson, you can continue to the nex
     # username is your username
     $ ssh username@training.osgconnect.net  
     # enter your password
-    $ passwd:                            
+    password:                            
 
 ## Job Execution Script
 
