@@ -23,8 +23,17 @@ If you are still logged in from the previous lesson, you can continue to the nex
 # username is your username
 $ ssh username@training.osgconnect.net  
 # enter your password
-$ passwd:                            
+password:                            
 ```
+
+You may receive a warning such as:
+```
+The authenticity of host 'training.osgconnect.net (192.170.227.119)' can't be established.
+RSA key fingerprint is SHA256:KRH0+kF1V5kNookplCt2f+lH4dKaZLowKbEevNnVmKY.
+Are you sure you want to continue connecting (yes/no)?
+```
+
+This is normal when connecting to a new host for the first time. If prompted, type 'yes'.
 
 ## Job execution script
 
