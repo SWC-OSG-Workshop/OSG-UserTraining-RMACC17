@@ -88,7 +88,7 @@ You can verify at this point (or any later time) that the setup procedure comple
 ## Our first annex
 
     $ connect_annex -count 1 \
-                    -annex-name MyFirstAnnex \
+                    -annex-name MyFirstAnnex$USER \
                     -duration 0.83 \
                     -idle 0.25 \
                     -aws-on-demand-ami-id ami-a2a795b4
@@ -99,7 +99,7 @@ The specified image (AMI), is a pre-defined OSG Connect image, containing a basi
 
 After a few minutes, we should be able to see the new resource show up in or HTCondor pool:
 
-    $ condor_status -annex MyFirstAnnex_$USER
+    $ condor_status -annex MyFirstAnnex$USER
 
 
 ## Running jobs exclusively on AWS instances
@@ -242,7 +242,7 @@ additionally plots a distribution histogram on your terminal window. This is nic
 
 The following command shuts HTCondor off on each instance in the annex; if you're using the default annex image, doing so causes each instance to shut itself down.
 
-    $ condor_off -annex MyFirstAnnex_$USER
+    $ condor_off -annex MyFirstAnnex$USER
     Sent "Kill-Daemon" command for "master" to master ip-172-31-48-84.ec2.internal
 
 ## Spot Fleet
@@ -305,7 +305,7 @@ Download the JSON file from the upper right corner. Do _not_ finish the guide.
 
 Copy the json file to `~/.condor/fleet.json` under your account on training.osgconnect.net.
 
-    $ connect_annex -annex-name SpotAnnex_$USER \
+    $ connect_annex -annex-name SpotAnnex$USER \
                     -slots 5 \
                     -aws-spot-fleet-config-file ~/.condor/fleet.json 
     Will request 5 spot slots for 0.83 hours.  Each instance will terminate after being idle for 0.25 hours.
@@ -320,7 +320,7 @@ you will find the spot instances starting up.
 
 As in the on-demand case, we can check on the instances with `condor_status -annex`
 
-    $ condor_status -annex SpotAnnex_$USER
+    $ condor_status -annex SpotAnnex$USER
     Name                                OpSys      Arch   State     Activity LoadAv Mem   ActvtyTime
     
     slot1@ip-172-31-80-9.ec2.internal   LINUX      X86_64 Unclaimed Idle      0.000 1820  0+00:00:23

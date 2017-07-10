@@ -16,15 +16,6 @@ In this section, we will learn the basics of HTCondor in submitting and monitori
 
 ![fig 1](https://raw.githubusercontent.com/OSGConnect/tutorial-quickstart/master/Images/jobSubmit.png)
 
-## Login to OSG Connect
-
-If you are still logged in from the previous lesson, you can continue to the next section. Otherwise, please login using SSH:
-
-
-    # username is your username
-    $ ssh username@training.osgconnect.net  
-    # enter your password
-    password:                            
 
 ## Job Execution Script
 
