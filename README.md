@@ -1,6 +1,6 @@
-The webpage is located at https://swc-osg-workshop.github.io/OSG-UserTraining-PEARC17
+The webpage is located at https://swc-osg-workshop.github.io/OSG-UserTraining-RMACC17
 
-# Software Carpentry - Open Science Grid (SWC-OSG) Workshop#
+# Software Carpentry - Open Science Grid (SWC-OSG) Workshop
 
 We work directly on the `gh-pages` as it is useful for the website 
 rendering. GitHub renders the website from the HTML and markdown 
