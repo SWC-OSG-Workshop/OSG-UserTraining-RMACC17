@@ -24,7 +24,7 @@ The Open Science Grid (OSG) is a consortium of research communities which facili
 The OSG provides the unused compute resources at the various OSG contributors opportunistically in an shared pool to outside researchers. This means that resource availability may vary greatly with time. 
 
 
-![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-PEARC17/gh-pages/images/osg_job_flow.png)
+![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/Images/osg_job_flow.png)
 
 
 ## Computation that is a good match for OSG 
