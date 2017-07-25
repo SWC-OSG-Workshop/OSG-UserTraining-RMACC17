@@ -72,7 +72,7 @@ The wrapper loads the the relevant modules and then executes the python script `
 
 ## Submitting set of jobs with single submit file
 
-![fig 3](https://github.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/blob/gh-pages/novice/DHTC/Images/queue_N_command.png)
+![fig 3](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/queue_N_command.png)
 
 Now let us take a look at job description file 
 
