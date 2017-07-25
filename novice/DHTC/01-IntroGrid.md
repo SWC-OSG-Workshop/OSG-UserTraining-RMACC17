@@ -24,28 +24,29 @@ The Open Science Grid (OSG) is a consortium of research communities which facili
 The OSG provides the unused compute resources at the various OSG contributors opportunistically in an shared pool to outside researchers. This means that resource availability may vary greatly with time. 
 
 
-![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/Images/osg_job_flow.png)
+![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/osg_job_flow.png)
 
 
 ## Computation that is a good match for OSG 
 
-High throughput work flows with simple system and data dependencies are a good fit for OSG. Typically, these work flows can be broken down into multiple tasks that can be carried out independently. Ideally, these tasks will download input data, run some computation on it and then return results (which may be used by future tasks).
+High throughput work flows with simple system and data dependencies are a good fit for OSG. Typically, these work flows can be broken down into multiple tasks that can be carried out independently. Ideally, these tasks will download input data, run a computation, and then return results (which may be used by future tasks).
 
 Jobs submitted into the OSG will be executed on machines at several remote physical clusters. These machines may differ in terms of computing environment from the submit node. Therefore it is important that the jobs are as self-contained as possible. The necessary binaries (and/or scripts) and data should either carried with the job, or staged on demand. 
 
 Please consider the following guidelines:
 
-* Software should preferably be single threaded, using less than 2 GB memory and each invocation should run for 1-12 hours (optimally under 3 hours). There is some support for jobs with longer run time, more memory or multi-threading support. Please contact the user support listed below for more information about these capabilities.
-* Only core utilities can be expected on the remote end. There is no standard version of software such as `gcc`, `python`, `BLAS`, or others. Consider using Distributed Environment Modules to manage software dependencies, or read our Developing High-Throughput Applications Guide.
+* Software should preferably be single threaded, using less than 2 GB memory and each instance should run for 1-12 hours (optimally under 3 hours). There is support for jobs with longer run time, more memory or multi-threading support. Please contact the user support listed below for more information about these capabilities.
+* Only core utilities can be expected on the remote end. There is no standard version of software such as `gcc`, `python`, `BLAS`, or others. Consider using Software Modules, see below, to manage software dependencies, or look through our [High Throughput Computing Recipes](https://support.opensciencegrid.org/support/solutions/5000161171).
 * No shared file system. Jobs must transfer all executables, input data, and output data. Input and output data for each job should be < 10 GB to allow them to be transferred in by the jobs, processed and returned to the submit node. The scheduler, HTCondor, can transfer the files for you. Depending on the size of your input and output files, other transfer methods (`scp`, `rsync`, `GridFTP`) may be better suited. Please contact the user support listed below for more information
 
 ## Computation that is NOT a good match for OSG 
 
 The following are examples of computations that are NOT good matches for 
 OSG:
-* Tightly coupled computations, for example using MPI-based communication, will not work well on OSG due to the distributed nature of the infrastructure.
-* Computations requiring a shared file system will not work, as there is no shared file system between the different clusters on the OSG.
-* Computations requiring complex software deployments or proprietary software are not a good fit.  There is limited support for distributing software to the compute clusters, but for complex software, or licensed software, deployment can be a major task.
+
+* Tightly coupled computations, for example using MPI-based communication across multiple compute nodes, due to the distributed nature of the infrastructure.
+* Computations requiring a shared file system, as there is no shared file system between the different clusters on the OSG.
+* Computations requiring complex software deployments or proprietary software are not a good fit. There is limited support for distributing software to the compute clusters, but for complex software, or licensed software, deployment can be a major task.
 
 ## How to get help using OSG
 
@@ -54,11 +55,11 @@ Please contact user support staff at [user-support@opensciencegrid.org](mailto:u
 
 ## Available Resources on OSG
 
-Commonly used software and libraries on the Open Science Grid are available in a central repository (known as OASIS) and accessed via the `module` command. We will see how to search for, load, and use software modules. This command may be familiar to you if you have used HPC clusters before such as XSede's Comet or NERSC's Cori.
+Commonly used open source software and libraries are available in a central repository (known as OASIS) and accessed via the `module` command on OSG. We will see how to search for, load, and use software modules. This command may be familiar to you if you have used HPC clusters before such as XSede's Comet or NERSC's Cori.
 
 We will also cover the usage of the built-in `tutorial` command. Using `tutorial`, we load a variety of job templates that cover basic usage, specific use cases, and best practices.
 
-### Software Applications
+### Software Modules
 
 To take a look at the `module` command, log in to the submit host via SSH:
 
@@ -96,8 +97,7 @@ In order to load a module, you need to run `module load [modulename]`. If you wa
 
     $ module load R
 
-This sets up the `R` package for you. Now you can do some test calculations with R. 
-
+This sets up the `R` package for you. Now you can do a test calculations with R. 
 
     # invoke R 
     $ R 
@@ -107,9 +107,10 @@ This sets up the `R` package for you. Now you can do some test calculations with
 
 If you want to unload a module, type 
 
-
     $ module unload R 
 
+
+For a more complete list of all available modules please check the [support page](https://support.opensciencegrid.org/support/solutions/articles/5000634397-software-modules-catalog) or `module spider`. 
 
 ### Tutorial Command
 
