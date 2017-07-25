@@ -227,7 +227,7 @@ In fact, we could define variables and assign them to HTCondor's expression. Thi
     -1 1 -1 1 
    )
 
-The `queue` command defines the variables `x_low`, `x_high`, `y_low`, and `y_high`. These variables are passed on to the argument command (`arguments = $(x_low) $(x_high) $(y_low) $(y_high)`). 
+The `queue` command defines the variables `x_low`, `x_high`, `y_low`, and `y_high`. These variables are passed on to the `argument` command (`arguments = $(x_low) $(x_high) $(y_low) $(y_high)`). 
  
 Let us submit the above job
 

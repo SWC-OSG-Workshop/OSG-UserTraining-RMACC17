@@ -9,6 +9,7 @@ humantime: 8:30 am - 12:00 Noon
 startdate: 2017-08-17
 enddate: 2017-08-17
 latlng: 40.0096095,-105.2444736
+conference: https://www.rmacc.org/hpcsymposium
 registration: https://www.rmacc.org/hpcsymposium/registration
 instructor: ["Mats Rynge, Rob Gardner"]
 helper: ["Suchandra Thapa, Benedikt Riedel"]
@@ -21,15 +22,6 @@ contact: user-support@opensciencegrid.org
     Edit the values in the parameter block above to be appropriate for your bootcamp.
 -->
 
-<!--
-Practice and Experience in Advanced Research Computing 2017 (PEARC17) July 9-13, 2017 New Orleans, LA
-    This block includes the Eventbrite registration widget if 'eventbrite' has been set in the header.
--->
-<!--
-{% if page.eventbrite %}
-<iframe src="//www.eventbrite.com/tickets-external?eid={{page.eventbrite}}&ref=etckt" frameborder="0" width="100%" scrolling="auto"></iframe>
-{% endif %}
--->
 
 <h2>General Information</h2>
 
@@ -114,6 +106,12 @@ Workloads; High throughput submission to Amazon cloud
   {% endif %}
   for more information.
 </p>
+
+<p>
+  <strong>Conference</strong>:
+  {{page.conference}}
+</p>
+
 
 <hr/>
 
