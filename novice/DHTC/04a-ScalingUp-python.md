@@ -15,7 +15,7 @@ title: Large Scale Computation with HTCondor
 
 It is essential to learn how to scale up and control large numbers of jobs to realize the full potential of distributed high throughput computing on the OSG. This requires the ability to submit and process multiple jobs in parallel. Some workloads require these considerations: multi-dimensional Monte Carlo integration using sampling, parameter sweep(s) for a given model, or molecular dynamics simulation with several initial conditions. All of these workloads require submitting more than a handful of jobs. 
 
-![fig 1](https://raw.githubusercontent.com/OSGConnect/tutorial-ScalingUp-Python/master/Images/Slide1.png)
+![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/htc_vs_hpc_serial.png)
 
 The HTCondor's `queue` command can run multiple jobs from a single job description file. In this tutorial, we will see how to scale up the calculations for a simple Python example using the HTCondor’s `queue` command.
 
@@ -59,7 +59,7 @@ The directory `Example1` runs the Python script with the default random values. 
 
 ## Execution Script
 
-Let us take a look at the execution script, `scalingup-python-wrapper.sh`
+Let us take a look at the execution script, `cat scalingup-python-wrapper.sh`
 
     #!/bin/bash
 
@@ -72,7 +72,7 @@ The wrapper loads the the relevant modules and then executes the python script `
 
 ## Submitting set of jobs with single submit file
 
-![fig 3](https://raw.githubusercontent.com/OSGConnect/tutorial-ScalingUp-Python/master/Images/Slide2.png)
+![fig 3](https://github.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/blob/gh-pages/novice/DHTC/Images/queue_N_command.png)
 
 Now let us take a look at job description file 
 
@@ -135,9 +135,9 @@ Apply your `condor_q` and `connect watch` knowledge to see this job progress. Af
 
     ./post_process.sh
 
-## Other ways to use `queue` command
+<!-- ## Other ways to use `queue` command
 
-Now we will explore other ways to use `queue` command. In the previous example, we did not pass any argument to the program and it used randomly-generated boundary conditions. If we have some idea about where the minimum/maximum is, we can supply boundary conditions to the calculation through arguments. In our example, the minimum  of the Rosenbrock function is located at (1,1). 
+Now we will explore other ways to use `queue` command. In the previous example, we did not pass any argument to the program and it used randomly-generated boundary conditions. If we have some idea about where the minimum/maximum is, we can supply boundary conditions to the calculation through arguments. In our example, the minimum  of the Rosenbrock function is located at (1,1).
 
 ### Supply multiple arguments via queue command
 
@@ -172,12 +172,12 @@ Let us submit the above job
     9 job(s) submitted to cluster 329838.
 
 Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
-
     ./post_process.sh
+ -->
 
 ## Variable expansion via `queue` command
 
-![fig 5](https://raw.githubusercontent.com/OSGConnect/tutorial-ScalingUp-Python/master/Images/Slide4.png)
+![fig 5](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/queue_arg_set.png)
 
 In the above example, we had to type `argument` and `queue` expressions repeatedly. There is a way to implement compact queue expression and expand the arguments for each job. Take a look at the job description file in Example3. 
 
@@ -225,7 +225,7 @@ In fact, we could define variables and assign them to HTCondor's expression. Thi
     -3 3 -3 3 
     -2 2 -2 2 
     -1 1 -1 1 
-   )
+    )
 
 The `queue` command defines the variables `x_low`, `x_high`, `y_low`, and `y_high`. These variables are passed on to the argument command (`arguments = $(x_low) $(x_high) $(y_low) $(y_high)`). 
  
