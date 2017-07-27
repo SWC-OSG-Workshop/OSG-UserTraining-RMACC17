@@ -287,9 +287,9 @@ This is an shell script that is similar to the above example. The main differenc
     printf "Job running as user: "; /usr/bin/id
     printf "Job is running in directory: "; /bin/pwd
     printf "The command line argument is: "; $1
-    printf "Contents of $1 is"; cat $1
+    printf "Contents of $1 is "; cat $1
     cat $1 > output.txt
-    echo "Working hard..."
+    printf "Working hard..."
     ls -l $PWD
     sleep 20
     echo "Science complete!"

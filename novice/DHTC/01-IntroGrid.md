@@ -23,9 +23,7 @@ The Open Science Grid (OSG) is a consortium of research communities which facili
 
 The OSG provides the unused compute resources at the various OSG contributors opportunistically in an shared pool to outside researchers. This means that resource availability may vary greatly with time. 
 
-
 ![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/osg_job_flow.png)
-
 
 ## Computation that is a good match for OSG 
 
@@ -33,7 +31,7 @@ High throughput work flows with simple system and data dependencies are a good f
 
 Jobs submitted into the OSG will be executed on machines at several remote physical clusters. These machines may differ in terms of computing environment from the submit node. Therefore it is important that the jobs are as self-contained as possible. The necessary binaries (and/or scripts) and data should either carried with the job, or staged on demand. 
 
-Please consider the following guidelines:
+Consider the following guidelines:
 
 * Software should preferably be single threaded, using less than 2 GB memory and each instance should run for 1-12 hours (optimally under 3 hours). There is support for jobs with longer run time, more memory or multi-threading support. Please contact the user support listed below for more information about these capabilities.
 * Only core utilities can be expected on the remote end. There is no standard version of software such as `gcc`, `python`, `BLAS`, or others. Consider using Software Modules, see below, to manage software dependencies, or look through our [High Throughput Computing Recipes](https://support.opensciencegrid.org/support/solutions/5000161171).
