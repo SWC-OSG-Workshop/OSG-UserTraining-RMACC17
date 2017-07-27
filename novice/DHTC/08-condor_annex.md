@@ -225,7 +225,7 @@ Make sure you still have at least one annex host active, and then submit the `aw
 
 When we start submitting many simultaneous jobs into the queue, it might be worth looking at where they run. To get that information, we'll use the `condor_history` command from quickstart tutorial.Change the job id (942) to the job id provided by the `condor_submit` command:
 
-	$ condor_history -format '%s\n' MATCH_EXP_JOBGLIDEIN_ResourceName $USER | cut -d@ -f2 | cut -d. -f2,3
+	$ condor_history -format '%s\n' MATCH_EXP_JOBGLIDEIN_ResourceName $USER | cut -d@ -f2 | cut -d. -f2,3 | distribution --height=100
 	Val          |Ct (Pct)     Histogram
 	ec2.internal |456 (46.77%) +++++++++++++++++++++++++++++++++++++++++++++++++++++
 	uchicago.edu |422 (43.28%) +++++++++++++++++++++++++++++++++++++++++++++++++
