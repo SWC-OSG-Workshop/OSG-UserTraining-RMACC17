@@ -12,7 +12,13 @@ title: Job Scheduling with HTCondor
 
 ## Overview
 
-In this section, we will learn the basics of HTCondor in submitting and monitoring workloads, or "jobs". The jobs are submitted through the submit host. The submitted jobs are executed on the remote worker node(s) and the logs and, if configured, outputs are transfered back to the login node. In the HTCondor job submit file, we have to describe how to execute the program and transfer data.
+In this section, we will learn the basics of HTCondor in submitting and monitoring workloads, or "jobs". The typical cycle for a job is:
+
+1. Job is submitted through the submit host
+2. Job is executed on the remote worker node.
+3. Job executes or fails and the logs and, if configured, outputs are transfered back to the login node. 
+
+In HTCondor we use a job submit file to describe how to execute the program, transfer data, and what the system requirements of a job are.
 
 <!-- ![fig 1](https://raw.githubusercontent.com/OSGConnect/tutorial-quickstart/master/Images/jobSubmit.png) -->
 
@@ -51,9 +57,9 @@ Now, make the script executable.
 
     $ chmod +x short.sh
 
-Making the script executable and the "shebang" line (`#!/bin/bash`) line at the top of the script are not necessary for running programs that are only run locally. However, _it is extremely important for jobs running on the grid_.
+Making the script executable and the "shebang" line (`#!/bin/bash`) line at the top of the script are not necessary for programs that are only run locally. However, _it is extremely important for jobs running on the grid_.
 
-Since we used the tutorial command, all files are already in your workspace. Run the job locally when setting up a new job type -- it is good to test your job outside of HTCondor before submitting into the Open Science Grid.
+Since we used the `tutorial` command, all files are already in your workspace. Test jobs on the submit host first b locally when setting up a new job type -- it is good to test your job outside of HTCondor before submitting into the Open Science Grid.
 
     $ ./short.sh
     Start time: Mon Mar  6 00:08:06 CST 2017
@@ -101,7 +107,7 @@ Submit the job using `condor_submit`.
 
 ## Job Status
 
-The `condor_q` command tells the status of currently running jobs. Please note, that the `condor_q` command line interface has changed in recent HTCondor versions, and in this tutorial we are using the new version.
+The `condor_q` command tells the status of currently running jobs. Please note that the `condor_q` command line interface has changed in recent HTCondor versions, and in this tutorial we are using the new version.
 
     $ condor_q
 
@@ -139,7 +145,7 @@ You can also get status on a specific job cluster:
 
 Note the ST (state) column. Your job will be in the `I` state (idle) if it hasn't started yet. If it's running, it will have state `R` (running). If it has completed already, it will not appear in `condor_q`.
 
-Let's wait for your job to finish – that is, for `condor_q` not to show the job in its output. A useful tool for this is watch – it runs a program repeatedly, letting you see how the output differs at fixed time intervals. Let's submit the job again, and watch condor_q output at two-second intervals:
+Let's wait for your job to finish – that is, for `condor_q` not to show the job in its output. A useful tool for this is `watch`. It runs a program repeatedly, letting you see how the output changes at fixed time intervals. Let's submit the job again, and watch condor_q output at two-second intervals:
 
     $ condor_submit tutorial01.submit
     Submitting job(s). 
@@ -182,7 +188,7 @@ Read the output file. It should be something like this:
 
 ## Removing Jobs
 
-Once you know how to create files, you want to know how to delete them. And once you can schedule workloads across thousands of computers simultaneously, you need to know how to remove them. The command for that is `condor_rm`, and it takes only one argument, either the job ID or your username.
+You may want to remove individual or all your workloads from the queue. The command to remove jobs from the queue is `condor_rm`. It takes one argument, either the job ID or your username. Providing the job ID will remove only that job:
 
     $ condor_submit tutorial01.submit
     Submitting job(s).
@@ -190,17 +196,14 @@ Once you know how to create files, you want to know how to delete them. And once
     $ condor_rm 1145
     Cluster 1145 has been marked for removal.
 
-Sometimes it is useful to remove all your jobs. You can do that by specifying your username as argument for `condor_rm`:
+while providing your username will remove all jobs associated with your username:
 
-    $ condor_submit tutorial01.submit
-    Submitting job(s).
-    1 job(s) submitted to cluster 1146
     $ condor_rm username
     All jobs of user "username" have been marked for removal
 
 ## Basics of HTCondor Matchmaking
 
-As you have seen in the previous lesson, HTCondor is a batch management system that handles running jobs on a cluster. Like other full-featured batch systems, HTCondor provides a job queuing mechanism, scheduling policy, priority scheme, resource monitoring, and resource management. Users submit their jobs to HTCondor scheduler. HTCondor places them into a queue, chooses when and where to run the jobs based upon a policy, carefully monitors their progress, and ultimately informs the user upon completion. This lesson will go over the some of the specifics of how HTCondor selects compute nodes where it should run particular jobs.  
+As you have seen in the previous lesson, HTCondor is a batch management system that handles running jobs on a cluster. Like other full-featured batch systems, HTCondor provides a job queuing mechanism, scheduling policy, priority scheme, resource monitoring, and resource management. Users submit their jobs to a HTCondor scheduler. HTCondor places the jobs into a queue, chooses when and where to run the jobs based upon a policy, carefully monitors the their progress, and ultimately informs the user upon completion or failure. This lesson will go over some of the specifics of how HTCondor selects where to run a particular job.  
 
 HTCondor selects nodes on which to run particular jobs using a matchmaking process.  When a job is submitted to HTCondor, HTCondor generates a set of attributes that the job needs in order to run. These attributes function like classified ads in the newspaper and are called "classad"s. The classads for a job indicate what it is looking for, just like a help wanted ad. For example:
 
@@ -272,13 +275,13 @@ than one job, they will all have unique outputs.
     job.1151.0.output
     job.1152.0.output
 
-## A more advanced OSG Job
+## A More Advanced OSG Job
 
 For any script or job you want to run, you will usually want to do one or several of the following things: pass input parameters to a script, use input file, and produce an output file. Open the example script `short_with_input_output_transfer.sh` with `cat`:
 
     $ cat short_with_input_and_transfer.sh
 
-This is an shell script that is similar to the above example. The main difference is that it takes a text file as a command line argument argument, i.e. `$1`, and produces an output file, that is the copy of the input file, i.e. `cat $1 > output.txt`.
+This is a shell script that is similar to the above example. The main difference is that this script takes a text file as a command line argument argument, i.e. $1, and produces an output file that is the copy of the input file, i.e. cat $1 > output.txt.
 
     #!/bin/bash
     # short.sh: a short discovery job

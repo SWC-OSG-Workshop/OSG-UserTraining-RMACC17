@@ -15,7 +15,7 @@ title: Introduction to Open Science Grid
 
 ## The Open Science Grid
 
-The Open Science Grid (OSG) is a consortium of research communities which facilitates distributed [high throughput computing](http://en.wikipedia.org/wiki/High-throughput_computing) for scientific research. The OSG
+The Open Science Grid (OSG) is a consortium of research communities that provides resources to use distributed [high throughput computing](http://en.wikipedia.org/wiki/High-throughput_computing) for scientific research. The OSG
 
 * Enables distributed computing on more than 120 institutions (for additional detail and geographic distribution of sites, check the [Introduction to OSG slides](https://docs.google.com/presentation/d/15__woXk4h-F2XThw4lGxBr8_VWtQKZIHYMS1q6qAi0Q/edit?usp=sharing)),
 * Supports efficient data processing, and 
@@ -27,9 +27,9 @@ The OSG provides the unused compute resources at the various OSG contributors op
 
 ## Computation that is a good match for OSG 
 
-High throughput work flows with simple system and data dependencies are a good fit for OSG. Typically, these work flows can be broken down into multiple tasks that can be carried out independently. Ideally, these tasks will download input data, run a computation, and then return results (which may be used by future tasks).
+High throughput workflows with simple system and data dependencies are a good fit for OSG. Typically, these workflows can be broken down into multiple tasks that can be carried out independently. Ideally, these tasks will download input data, run a computation, and then return results (which may be used by future tasks).
 
-Jobs submitted into the OSG will be executed on machines at several remote physical clusters. These machines may differ in terms of computing environment from the submit node. Therefore it is important that the jobs are as self-contained as possible. The necessary binaries (and/or scripts) and data should either carried with the job, or staged on demand. 
+Jobs submitted to the OSG will be executed at several remote clusters. These machines will differ in terms of computing environment from the submit node. Therefore it is important that the jobs are as self-contained as possible. The necessary binaries, scripts, and data should either carried with the job or staged on demand. 
 
 Consider the following guidelines:
 
@@ -118,7 +118,7 @@ The built-in `tutorial` command assists a user in getting started on OSG.  To se
     # will print a list tutorials
     $ tutorial 
 
-Say for example, you are interested in learning how to run R scripts on OSG, the 
+Say, for example, you are interested in learning how to run R scripts on OSG, the 
 `tutorial` command sets up the R tutorial for you. 
 
     $ tutorial R  
@@ -139,7 +139,7 @@ The `tutorial R` command creates a directory `tutorial-R` containing the necessa
     R.submit 
 
 
-Lets focus on `mcpi.R` and the R wrapper scripts. The details of `R.submit` script will be discussed later when we learn about submitting jobs with HTCondor.  
+Let's focus on `mcpi.R` and the R wrapper scripts. The details of `R.submit` script will be discussed later when we learn about submitting jobs with HTCondor.  
 
 The file `mcpi.R` is a R script that calculates the value of *pi* using the Monte Carlo method. The `R-wrapper.sh` essentially loads the R module and runs the `mcpi.R`
 script. 

@@ -40,7 +40,7 @@ It is assumed at this point that you already have your AWS account setup and ver
 
 The last command ensures that only you can read or write to those files.
 
-To generate and donwload a new pair of security tokens for `condor_annex` to use, go to the [IAM console](https://console.aws.amazon.com/iam/home?region=us-east-1#/home); log in if you need to. The following instructions assume you are logged in as a user with the privilege to create new users. (The 'root' user for any account has this privilege; other accounts may as well.)
+To generate and download a new pair of security tokens for `condor_annex` to use, go to the [IAM console](https://console.aws.amazon.com/iam/home?region=us-east-1#/home); log in if you need to. The following instructions assume you are logged in as a user with the privilege to create new users. (The 'root' user for any account has this privilege; other accounts may as well.)
 
  1. Click the __Add User__ button.
  2. Enter name in the User name box; __annex-user__ is a fine choice.
@@ -54,8 +54,8 @@ To generate and donwload a new pair of security tokens for `condor_annex` to use
 
  8. Click the __Next: review__ button (you may need to scroll down).
  9. Click the __Create user__ button.
- 10. From the line labelled annex-user, copy the value in the column labelled __Access key ID__ to `publicKeyFile`.
- 11. On the line labelled annex-user", click the __Show__ link in the column labelled __Secret access key__; copy the revealed value to `privateKeyFile`.
+ 10. From the line labeled annex-user, copy the value in the column labelled __Access key ID__ to `publicKeyFile`.
+ 11. On the line labeled "annex-user", click the __Show__ link in the column labelled __Secret access key__; copy the revealed value to `privateKeyFile`.
  12. Hit the __Close__ button.
 
 The 'annex-user' now has full privileges to your account. We're working on creating a CloudFormation template that will create a user with only the privileges `condor_annex` actually needs.
@@ -63,7 +63,7 @@ The 'annex-user' now has full privileges to your account. We're working on creat
 
 ## Running the Setup Command
 
-The following command will setup your AWS account. It will create a number of persistent components, none of which will cost you anything to keep around. These components can take quite some time to create; `condor_annex` checks each for completion every ten seconds and prints an additional dot (past the first three) when it does so, to let you know that everything's still working.
+The following command will set up your AWS account. It will create a number of persistent components, none of which will cost you anything to keep around. These components can take quite some time to create; `condor_annex` checks each for completion every ten seconds and prints an additional dot (past the first three) when it does so, to let you know that everything's still working.
 
     $ connect_annex -setup
     Creating configuration bucket (this takes less than a minute)....... complete.
@@ -95,7 +95,7 @@ You can verify at this point (or any later time) that the setup procedure comple
 
 This should start the process of bringing one VM up. *Duration*, which is the max lifetime of the VM, is set to 50 minutes. This lifetime is intended to help you conserve money by preventing the annex instances from accidentally running forever. *Idle* is set to 15 minutes, which is the amount of time the VM can sit without any jobs running before terminating.
 
-The specified image (AMI), is a pre-defined OSG Connect image, containing a basic OSG software stack. You can make custom images if you want to.
+The specified image (AMI) is a pre-defined OSG Connect image containing a basic OSG software stack. You can make custom images if you want to.
 
 After a few minutes, we should be able to see the new resource show up in or HTCondor pool:
 
@@ -223,7 +223,7 @@ Make sure you still have at least one annex host active, and then submit the `aw
 
 ### Where did jobs run? 
 
-When we start submitting many simultaneous jobs into the queue, it might be worth looking at where they run. To get that information, we'll use the `condor_history` command from quickstart tutorial.Change the job id (942) to the job id provided by the `condor_submit` command:
+When we start submitting many simultaneous jobs into the queue, it might be worth looking at where they run. To get that information, we'll use the `condor_history` command from quickstart tutorial:
 
 	$ condor_history -format '%s\n' MATCH_EXP_JOBGLIDEIN_ResourceName $USER | cut -d@ -f2 | cut -d. -f2,3 | distribution --height=100
 	Val          |Ct (Pct)     Histogram
@@ -236,7 +236,7 @@ When we start submitting many simultaneous jobs into the queue, it might be wort
 	...
 
 The distribution program reduces a list of hostnames to a set of hostnames with no duplication (much like `sort | uniq -c`), but
-additionally plots a distribution histogram on your terminal window. This is nice for seeing how Condor selected your execution endpoints.
+additionally plots a distribution histogram on your terminal window. This is nice for seeing how HTCondor selected your execution endpoints.
 
 ## Stop an Annex
 
@@ -250,7 +250,7 @@ The following command shuts HTCondor off on each instance in the annex; if you'r
 condor_annex supports Spot instances via an AWS technology called 
 *Spot Fleet*. Normally, when you request instances, you request a specific
 type of instance (the default on-demand instance is, for instance,
-`m4.large`.) However, in many cases, you don't care too much about
+`m4.large`). However, in many cases, you don't care too much about
 how many cores an intance has - HTCondor will automatically advertise
 the right number and schedule jobs appropriately, so why would you?
 In such cases - or in other cases where your jobs will run acceptably
@@ -266,10 +266,10 @@ at which point it will request the next-cheapest instance type.
 In order to create an annex via a Spot Fleet, you'll need a file
 containing a JSON blob which describes the Spot Fleet request you'd like
 to make. (It's too complicated for a reasonable command-line interface.)
-The AWS web console can be used to create such a file; the button to
-download that file is (currently) in the upper-right corner of the last
-page before you submit the Spot Fleet request; it is labeled `JSON
-config'. You may need to create an IAM role the first time you make a
+The AWS web console can be used to create such a file; the button to download 
+that file is labelled `JSON config' and is (currently) in the upper-right 
+corner of the last page before you submit the Spot Fleet request. You may 
+need to create an IAM role the first time you make a
 Spot Fleet request; please do so before running condor_annex.
 
 Additionally, be aware that condor_annex uses the Spot Fleet API in its

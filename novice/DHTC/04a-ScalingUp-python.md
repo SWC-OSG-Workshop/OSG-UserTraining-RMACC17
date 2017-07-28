@@ -13,22 +13,22 @@ title: Large Scale Computation with HTCondor
 
 ## Overview
 
-It is essential to learn how to scale up and control large numbers of jobs to realize the full potential of distributed high throughput computing on the OSG. This requires the ability to submit and process multiple jobs in parallel. Some workloads require these considerations: multi-dimensional Monte Carlo integration using sampling, parameter sweep(s) for a given model, or molecular dynamics simulation with several initial conditions. All of these workloads require submitting more than a handful of jobs. 
+To harness to full abilities of distributed high throughput computing on the OSG, it is necessary to learn how to scale up and control large numbers of jobs. This requires the ability to submit and process multiple jobs in parallel. Examples of workloads that require these considerations include multi-dimensional Monte Carlo integration using sampling, parameter sweep(s) for a given model, and molecular dynamics simulation with several initial conditions. All of these workloads require submitting more than a handful of jobs. 
 
 ![fig 1](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/htc_vs_hpc_serial.png)
 
-The HTCondor's `queue` command can run multiple jobs from a single job description file. In this tutorial, we will see how to scale up the calculations for a simple Python example using the HTCondor’s `queue` command.
+The HTCondor submit file keyword `queue` can run multiple jobs from a single job description file. In this tutorial, we will see how to scale up the calculations for a simple Python example using the `queue` keyword.
 
 Once we understand the basic HTCondor script to run a single job, it is easy to scale up.
 
-Obtain the example files via the `tutorial` command,
+You can get the example files via the `tutorial` command,
 
     $ tutorial ScalingUp-Python
     $ cd tutorial-ScalingUp-Python
 
-Inside the `tutorial-ScalingUp-Python` directory, all the required files are available. This includes the sample Python program, job description file, and executable files. 
+The `tutorial-ScalingUp-Python` directory contains all the required files. This includes the sample Python program, job description file, and executable files. 
 
-## Python script and the objective function
+## Python Script
 
 Here, we are going to use a brute force approach to finding the minimum/maximum (also known as "optimiziation") of a two dimensional function on a grid of points. Let us take a look at the function (also known as the objective function) that we are trying to optimize:
 
@@ -42,7 +42,7 @@ By default, Python script will randomly select the boundary values of the grid t
 
 To run the calculation with random boundary values, the script is executed without any argument
 
-    python rosen_brock_brute_opt.py
+    $ python rosen_brock_brute_opt.py
     
 To run the calculation with the user-supplied boundary values, the script is executed with input arguments
 
@@ -52,7 +52,7 @@ where `x_low` and `x_high` are low and high values along x-direction, and `y_low
 
 For example, to set the boundary in the x-direction as (-3, 3) and the boundary in the y-direction as (-2, 2), run
 
-    python rosen_brock_brute_opt.py -3 3 -2 2
+    $ python rosen_brock_brute_opt.py -3 3 -2 2
     
 
 The directory `Example1` runs the Python script with the default random values. The directories `Example2`, `Example3` and `Example4` deal with supplying the boundary values as input arguments. 
@@ -70,14 +70,14 @@ Let us take a look at the execution script, `cat scalingup-python-wrapper.sh`
 
 The wrapper loads the the relevant modules and then executes the python script `rosen_brock_brute_opt.py`. The python script takes four optional arguments.
 
-## Submitting set of jobs with single submit file
+## Submitting Set of Jobs with Single Submit File
 
 ![fig 3](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/queue_N_command.png)
 
 Now let us take a look at job description file 
 
-    cd Example1
-    cat ScalingUp-PythonCals.submit
+    $ cd Example1
+    $ cat ScalingUp-PythonCals.submit
 
 If we want to submit several jobs, we need to track log, out and error files for each job. An easy way to do this is to add the `$(Cluster)` and `$(Process)` variables to the file names. 
 
@@ -175,7 +175,7 @@ Apply your `condor_q` and `connect watch` knowledge to see this job progress. Af
     ./post_process.sh
  -->
 
-## Variable expansion via `queue` command
+## Variable Expansion via `queue` Keyword
 
 ![fig 5](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/queue_arg_set.png)
 
@@ -214,7 +214,7 @@ In fact, we could define variables and assign them to HTCondor's expression. Thi
     [...]
     arguments = $(x_low) $(x_high) $(y_low) $(y_high)
 
-    # Queue command  
+    # Queue keyword  
     queue x_low x_high y_low y_high from (
     -9 9 -9 9 
     -8 8 -8 8 
@@ -239,9 +239,9 @@ Apply your `condor_q` and `connect watch` knowledge to see this job progress. Af
 
     ./post_process.sh
 
-## Beyond the `queue` command
+## Beyond the `queue` Keyword
 
-For larger work loads, with more than 100 jobs or job interdependencies, there are a couple tools that we recommend using. They are beyond the scope of this tutorial. Please contact our support staff for more details. 
+For larger workloads, with more than 100 jobs or job interdependencies, there are a couple tools (DAGMan and Pegasus) that we recommend using. They are beyond the scope of this tutorial. Please contact our support staff for more details. 
 
 <!-- <div class="keypoints" markdown="1">
 #### Key Points
