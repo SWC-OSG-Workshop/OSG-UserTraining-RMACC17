@@ -179,7 +179,9 @@ Apply your `condor_q` and `connect watch` knowledge to see this job progress. Af
 
 ![fig 5](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/queue_arg_set.png)
 
-In the previous section we introduced the `argument` keyword, which allowed us to pass command line arguments to our `executable`. The `queue` command allows us submit a job for each entry in a list of arguments. Take a look at the job description file in Example3. 
+In the previous section we introduced the `argument` keyword, which allowed us to pass command line arguments to our `executable`. The `queue` command allows us submit a job for each entry in a list of arguments. We only need to write one submit file to be able to run jobs with various input parameters.
+
+Take a look at the job description file in Example3. 
 
     $ cd ../Example3
     $ cat ScalingUp-PythonCals.submit
