@@ -102,6 +102,8 @@ This sets up the `R` package for you. Now you can do a test calculations with R.
     # simple on-screen calculation with cosine function
     > cos(45)  
     [1] 0.525322
+    > quit()
+    Save workspace image? [y/n/c]: n
 
 If you want to unload a module, type 
 

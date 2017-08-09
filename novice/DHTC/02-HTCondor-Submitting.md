@@ -46,10 +46,10 @@ $ tutorial quickstart
 $ cd ~/tutorial-quickstart 
 ```
 
-We will look at two files in detail: `short.sh` and `tutorial01.submit`. You can use your favorite text editor, we will be using `nano`:
+We will look at two files in detail: `short.sh` and `tutorial01.submit`. You can use your favorite text editor, we will be using `cat`:
 
 ```
-$ nano short.sh
+$ cat short.sh
 ```
 
 ```
@@ -65,7 +65,7 @@ sleep 10
 echo "Science complete!"
 ```
 
-To close nano, hold down Ctrl and press X. Press Y to save, and then Enter. Now, make the script executable.
+Now, make the script executable.
 
 ```
 $ chmod +x short.sh 
@@ -91,7 +91,7 @@ Science complete!
 The HTCondor submit file describes the job requirements, how to execute the program, and what (small) input/output data needs to be transfered.
 
 ```
-$ nano tutorial01.submit
+$ cat tutorial01.submit
 ```
 
 ```

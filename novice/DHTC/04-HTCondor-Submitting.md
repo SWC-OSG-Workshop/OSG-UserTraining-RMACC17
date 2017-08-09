@@ -214,9 +214,11 @@ Let's examine what a machine classad looks like. This is a two step process, fir
     $ condor_status -pool osg-flock.grid.iu.edu -af Name | head -n 1
     [resource name]
     $ condor_status -long -pool osg-flock.grid.iu.edu [resource name] | sort
+    [...]
     HAS_FILE_usr_lib64_libgfortran_so_3 = true
     HAS_MODULES = false
     OSGVO_OS_STRING = "RHEL 6"
+    [...]
 
 
 HTCondor takes a list of classads from jobs and from compute nodes and then tries to make the classads with job requirements with the classads with compute node capabilities. When the two match, HTCondor will run the job on the compute node.
@@ -355,7 +357,7 @@ The filenames for this job includes a job id, which means that if you submit mor
 than one job, they will all have unique outputs.
 
     $ ls *.output
-    job.1152.0.output
+    job.1151.0.output
     job.1152.0.output
 
 There will also be an `output.txt` in the directory:
