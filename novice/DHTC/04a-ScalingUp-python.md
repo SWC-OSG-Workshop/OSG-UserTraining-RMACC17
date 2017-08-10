@@ -179,7 +179,7 @@ Apply your `condor_q` and `connect watch` knowledge to see this job progress. Af
 
 ![fig 5](https://raw.githubusercontent.com/SWC-OSG-Workshop/OSG-UserTraining-RMACC17/gh-pages/novice/DHTC/Images/queue_arg_set.png)
 
-In the previous section we introduced the `argument` keyword, which allowed us to pass command line arguments to our `executable`. The `queue` command allows us submit a job for each entry in a list of arguments. We only need to write one submit file to be able to run jobs with various input parameters.
+In the previous example, we did not pass any argument to the program and it used randomly-generated boundary conditions. If we have some idea about where the minimum/maximum is, we can supply boundary conditions to the calculation through arguments. To get a better idea of what are good boundary conditions, we want to scan over a number of boundary parameter sets. The `queue` command allows us to submit a job for each possible boundary condition we want to test using a single submit file. 
 
 Take a look at the job description file in Example3. 
 
