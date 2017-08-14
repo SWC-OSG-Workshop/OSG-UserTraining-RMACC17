@@ -28,8 +28,6 @@
 	    <div class="span6">
               <p>{{page.humandate}}</p>
               <p>{% if page.humantime %}{{page.humantime}}{% endif %}</p>
-	    </div>
-	    <div class="span6">
 	      <p>
 		<strong>Instructors:</strong>
 		{% if page.instructor %}
@@ -44,6 +42,13 @@
 		{{page.helper | join: ', ' %}}
 	      </p>
 	      {% endif %}
+	    </div>
+	    <div class="span6">
+          <strong>Event sponsored by:</strong>
+          <br>
+          <br>
+          <img src="img/amazon-aws.png">
+          <br>
 	    </div>
           </div>
         </div>
