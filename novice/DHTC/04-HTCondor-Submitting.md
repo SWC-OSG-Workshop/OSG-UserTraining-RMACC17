@@ -275,7 +275,6 @@ than one job, they will all have unique outputs.
 
     $ ls *.output
     job.1151.0.output
-    job.1152.0.output
 
 ## A More Advanced OSG Job
 
