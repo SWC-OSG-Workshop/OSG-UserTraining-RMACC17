@@ -41,7 +41,9 @@ By default, Python script will randomly select the boundary values of the grid t
 ![fig 2](https://raw.githubusercontent.com/OSGConnect/tutorial-ScalingUp-Python/master/Images/RosenBrockFunction.png)
 
 To run the calculation with random boundary values, the script is executed without any argument
-
+    
+    $ module load python/3.4
+    $ module load all-pkgs
     $ python rosen_brock_brute_opt.py
     
 To run the calculation with the user-supplied boundary values, the script is executed with input arguments
@@ -131,7 +133,7 @@ Let us submit the above job
     Submitting job(s)..........
     10 job(s) submitted to cluster 329837.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh` script to sort the results. 
+Apply your `condor_q` and `watch` (`watch -n2 condor_q $USER`) knowledge to see this job progress . After all jobs finished, execute the `post_process.sh` script to sort the results. 
 
     ./post_process.sh
 
@@ -204,7 +206,7 @@ Let us submit the above job
     Submitting job(s)..........
     9 job(s) submitted to cluster 329839.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
+Apply your `condor_q` and `watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
 
     ./post_process.sh
 
@@ -237,7 +239,7 @@ Let us submit the above job
     Submitting job(s)..........
     9 job(s) submitted to cluster 329840.
 
-Apply your `condor_q` and `connect watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
+Apply your `condor_q` and `watch` knowledge to see this job progress. After all jobs finished, execute the `post_process.sh`  script to sort the results. 
 
     ./post_process.sh
 

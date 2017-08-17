@@ -150,7 +150,7 @@ Let's wait for your job to finish – that is, for `condor_q` not to show the jo
     $ condor_submit tutorial01.submit
     Submitting job(s). 
     1 job(s) submitted to cluster 1145
-    $ watch -n2 condor_q username 
+    $ watch -n2 condor_q $USER 
 
 
 When your job has completed, it will disappear from the list.  To close watch, hold down Ctrl and press C.
@@ -274,13 +274,14 @@ The filenames for this job includes a job id, which means that if you submit mor
 than one job, they will all have unique outputs.
 
     $ ls *.output
+    job.output
     job.1151.0.output
 
 ## A More Advanced OSG Job
 
 For any script or job you want to run, you will usually want to do one or several of the following things: pass input parameters to a script, use input file, and produce an output file. Open the example script `short_with_input_output_transfer.sh` with `cat`:
 
-    $ cat short_with_input_and_transfer.sh
+    $ cat short_with_input_output_transfer.sh
 
 This is a shell script that is similar to the above example. The main difference is that this script takes a text file as a command line argument argument, i.e. $1, and produces an output file that is the copy of the input file, i.e. cat $1 > output.txt.
 
@@ -356,6 +357,7 @@ The filenames for this job includes a job id, which means that if you submit mor
 than one job, they will all have unique outputs.
 
     $ ls *.output
+    job.output
     job.1151.0.output
     job.1152.0.output
 
